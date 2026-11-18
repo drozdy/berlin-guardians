@@ -1,0 +1,27 @@
+{
+  "name": "berlin-guardians",
+  "version": "1.0.0",
+  "description": "Game set with e-shop options",
+  "keywords": [
+    "games",
+    "assets",
+    "firebase",
+    "typescript"
+  ],
+  "homepage": "https://github.com/htochko/berlin-guardians#readme",
+  "bugs": {
+    "url": "https://github.com/htochko/berlin-guardians/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/htochko/berlin-guardians.git"
+  },
+  "license": "ISC",
+  "type": "module",
+  "scripts": {
+  },
+  "devDependencies": {
+    "typescript": "~6.0.2",
+    "vite": "^8.3.0"
+  }
+}
