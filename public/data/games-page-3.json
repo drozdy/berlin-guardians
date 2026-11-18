@@ -1,0 +1,98 @@
+{
+  "data": [
+    {
+      "slug": "rainy-day-bookshop",
+      "name": "Rainy Day Bookshop",
+      "category": "simulation",
+      "price": "$3.99",
+      "shortDescription": "A cozy bookshop where it always seems to be raining. Sort books, recommend the right one to each visitor and rearrange the shelves.",
+      "rating": 4.5,
+      "likesCount": 14200,
+      "cardImage": {
+        "alt": "Rainy Day Bookshop game artwork",
+        "width": 460,
+        "height": 215,
+        "sources": [
+          {
+            "type": "image/webp",
+            "srcset": "/assets/images/games/rainy-day-bookshop-card.webp 1x, /assets/images/games/rainy-day-bookshop-card@2x.webp 2x"
+          }
+        ],
+        "fallback": "/assets/images/games/rainy-day-bookshop-card.jpg"
+      }
+    },
+    {
+      "slug": "pebble-stack",
+      "name": "Pebble Stack",
+      "category": "casual",
+      "price": "Free",
+      "shortDescription": "Stack pebbles into tall wobbly towers. Pick the right stone, find the balance point and try not to sneeze.",
+      "rating": 4.5,
+      "likesCount": 11800,
+      "cardImage": {
+        "alt": "Pebble Stack game artwork",
+        "width": 460,
+        "height": 215,
+        "sources": [
+          {
+            "type": "image/webp",
+            "srcset": "/assets/images/games/pebble-stack-card.webp 1x, /assets/images/games/pebble-stack-card@2x.webp 2x"
+          }
+        ],
+        "fallback": "/assets/images/games/pebble-stack-card.jpg"
+      }
+    },
+    {
+      "slug": "drum-circle-dash",
+      "name": "Drum Circle Dash",
+      "category": "music",
+      "price": "$1.99",
+      "shortDescription": "A fast rhythm game with hand drums. Hit the right pad at the right time and keep the circle going as the tempo ramps up.",
+      "rating": 4.5,
+      "likesCount": 13600,
+      "cardImage": {
+        "alt": "Drum Circle Dash game artwork",
+        "width": 460,
+        "height": 215,
+        "sources": [
+          {
+            "type": "image/webp",
+            "srcset": "/assets/images/games/drum-circle-dash-card.webp 1x, /assets/images/games/drum-circle-dash-card@2x.webp 2x"
+          }
+        ],
+        "fallback": "/assets/images/games/drum-circle-dash-card.jpg"
+      }
+    },
+    {
+      "slug": "jelly-jump",
+      "name": "Jelly Jump",
+      "category": "arcade",
+      "price": "$1.99",
+      "shortDescription": "Bounce a little jelly up a tower of floating platforms. Time your jumps, collect sweets and try not to land on the sour ones.",
+      "rating": 4.5,
+      "likesCount": 16400,
+      "cardImage": {
+        "alt": "Jelly Jump game artwork",
+        "width": 460,
+        "height": 215,
+        "sources": [
+          {
+            "type": "image/webp",
+            "srcset": "/assets/images/games/jelly-jump-card.webp 1x, /assets/images/games/jelly-jump-card@2x.webp 2x"
+          }
+        ],
+        "fallback": "/assets/images/games/jelly-jump-card.jpg"
+      }
+    }
+  ],
+  "meta": {
+    "page": 3,
+    "limit": 10,
+    "totalItems": 24,
+    "totalPages": 3,
+    "appliedFilter": {
+      "category": "all",
+      "sort": "rating-desc"
+    }
+  }
+}
