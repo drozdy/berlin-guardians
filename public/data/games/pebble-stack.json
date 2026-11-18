@@ -1,0 +1,48 @@
+{
+  "data": {
+    "slug": "pebble-stack",
+    "name": "Pebble Stack",
+    "heroImage": {
+      "alt": "Pebble Stack game artwork",
+      "width": 1920,
+      "height": 1080,
+      "sources": [
+        {
+          "type": "image/webp",
+          "srcset": "/assets/images/games/pebble-stack-hero.webp 1x, /assets/images/games/pebble-stack-hero@2x.webp 2x"
+        }
+      ],
+      "fallback": "/assets/images/games/pebble-stack-hero.jpg"
+    },
+    "rating": 4.5,
+    "likesCount": 11800,
+    "isLikedByCurrentUser": false,
+    "fullDescription": "Pebble Stack — a physics game about balancing stones. Each level hands you a few pebbles of different shapes and a flat rock. Find the balance point and stack as high as you can. If it falls, you try again. It's calmer than it sounds.",
+    "specs": {
+      "genre": "Casual",
+      "players": "Solo",
+      "duration": "5-15 min",
+      "price": "Free"
+    },
+    "topRecords": [
+      {
+        "position": 1,
+        "playerName": "CloudWalker",
+        "score": 34700,
+        "achievedAt": "2026-11-12T10:20:00Z"
+      },
+      {
+        "position": 2,
+        "playerName": "NightOwl",
+        "score": 32350,
+        "achievedAt": "2026-11-09T17:45:00Z"
+      },
+      {
+        "position": 3,
+        "playerName": "TeaTime",
+        "score": 30000,
+        "achievedAt": "2026-11-03T08:30:00Z"
+      }
+    ]
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "data": {
+    "slug": "memory-game",
+    "name": "Memory Game: Neither This Nor That",
+    "heroImage": {
+      "alt": "Memory Game: Neither This Nor That game artwork",
+      "width": 1920,
+      "height": 1080,
+      "sources": [
+        {
+          "type": "image/webp",
+          "srcset": "/assets/images/games/memory-game-hero.webp 1x, /assets/images/games/memory-game-hero@2x.webp 2x"
+        }
+      ],
+      "fallback": "/assets/images/games/memory-game-hero.jpg"
+    },
+    "rating": 4.7,
+    "likesCount": 640,
+    "isLikedByCurrentUser": false,
+    "fullDescription": "Memory Game: Neither This Nor That — a memory game in vegetable dark fantasy. Eight vegetable princes are after the princess's hand. Every pair you find gets rejected and eaten, and the last prince standing becomes her chosen one. Each eaten prince has his own story and verdict. Every flip counts as a move, so fewer moves puts you higher in the Court Chronicle.",
+    "specs": {
+      "genre": "Puzzle",
+      "players": "Solo",
+      "duration": "3-8 min",
+      "price": "Free"
+    },
+    "topRecords": [
+      {
+        "position": 1,
+        "playerName": "CardShark",
+        "score": 4800,
+        "achievedAt": "2026-11-11T13:10:00Z"
+      },
+      {
+        "position": 2,
+        "playerName": "SharpMemory",
+        "score": 4550,
+        "achievedAt": "2026-11-07T17:25:00Z"
+      },
+      {
+        "position": 3,
+        "playerName": "PairFinder",
+        "score": 4200,
+        "achievedAt": "2026-11-04T10:50:00Z"
+      }
+    ]
+  }
+}

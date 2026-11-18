@@ -1,0 +1,48 @@
+{
+  "data": {
+    "slug": "beehive-valley",
+    "name": "Beehive Valley",
+    "heroImage": {
+      "alt": "Beehive Valley game artwork",
+      "width": 1920,
+      "height": 1080,
+      "sources": [
+        {
+          "type": "image/webp",
+          "srcset": "/assets/images/games/beehive-valley-hero.webp 1x, /assets/images/games/beehive-valley-hero@2x.webp 2x"
+        }
+      ],
+      "fallback": "/assets/images/games/beehive-valley-hero.jpg"
+    },
+    "rating": 4.6,
+    "likesCount": 19800,
+    "isLikedByCurrentUser": false,
+    "fullDescription": "Beehive Valley — a cozy farm game about beekeeping. You inherit a messy valley and a few tired hives. Plant flowers, move the hives around and keep the bees happy through every season. Different flowers make different honey, and the neighbors pay well for the rare ones.",
+    "specs": {
+      "genre": "Farm",
+      "players": "Solo",
+      "duration": "40-80 min",
+      "price": "$2.99"
+    },
+    "topRecords": [
+      {
+        "position": 1,
+        "playerName": "NightOwl",
+        "score": 31370,
+        "achievedAt": "2026-11-12T10:20:00Z"
+      },
+      {
+        "position": 2,
+        "playerName": "TeaTime",
+        "score": 29020,
+        "achievedAt": "2026-11-09T17:45:00Z"
+      },
+      {
+        "position": 3,
+        "playerName": "PixelLeaf",
+        "score": 26670,
+        "achievedAt": "2026-11-03T08:30:00Z"
+      }
+    ]
+  }
+}

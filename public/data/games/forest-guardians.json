@@ -1,0 +1,29 @@
+{
+  "data": {
+    "slug": "forest-guardians",
+    "name": "Forest Guardians",
+    "heroImage": {
+      "alt": "Forest Guardians game artwork",
+      "width": 1920,
+      "height": 1080,
+      "sources": [
+        {
+          "type": "image/webp",
+          "srcset": "/assets/images/games/forest-guardians-hero.webp 1x, /assets/images/games/forest-guardians-hero@2x.webp 2x"
+        }
+      ],
+      "fallback": "/assets/images/games/forest-guardians-hero.jpg"
+    },
+    "rating": 4.8,
+    "likesCount": 860,
+    "isLikedByCurrentUser": false,
+    "fullDescription": "Forest Guardians — a small tactical game about saving the forest from a spreading fire. You start with a single squirrel scout on a 10x10 top-down map, find the towns, hire a hedgehog or a turtle and use their water to put the fire out. Hold on for 25 turns and keep at least 3 of 5 towns. If a town burns before you reach it, you can never hire there again.",
+    "specs": {
+      "genre": "Strategy",
+      "players": "Solo",
+      "duration": "10-15 min",
+      "price": "$2.99"
+    },
+    "topRecords": []
+  }
+}
