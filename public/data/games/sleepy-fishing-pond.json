@@ -1,0 +1,48 @@
+{
+  "data": {
+    "slug": "sleepy-fishing-pond",
+    "name": "Sleepy Fishing Pond",
+    "heroImage": {
+      "alt": "Sleepy Fishing Pond game artwork",
+      "width": 1920,
+      "height": 1080,
+      "sources": [
+        {
+          "type": "image/webp",
+          "srcset": "/assets/images/games/sleepy-fishing-pond-hero.webp 1x, /assets/images/games/sleepy-fishing-pond-hero@2x.webp 2x"
+        }
+      ],
+      "fallback": "/assets/images/games/sleepy-fishing-pond-hero.jpg"
+    },
+    "rating": 4.6,
+    "likesCount": 26700,
+    "isLikedByCurrentUser": false,
+    "fullDescription": "Sleepy Fishing Pond — a casual game for when you just want to do nothing for a few minutes. Cast, wait, catch. Every fish has its own mood and favorite time of day, and the pond journal fills up as you learn them. Soft music, no fail state.",
+    "specs": {
+      "genre": "Casual",
+      "players": "Solo",
+      "duration": "5-20 min",
+      "price": "Free"
+    },
+    "topRecords": [
+      {
+        "position": 1,
+        "playerName": "MapleJay",
+        "score": 33330,
+        "achievedAt": "2026-11-12T10:20:00Z"
+      },
+      {
+        "position": 2,
+        "playerName": "CozyPlayer",
+        "score": 30980,
+        "achievedAt": "2026-11-09T17:45:00Z"
+      },
+      {
+        "position": 3,
+        "playerName": "MossyStone",
+        "score": 28630,
+        "achievedAt": "2026-11-03T08:30:00Z"
+      }
+    ]
+  }
+}

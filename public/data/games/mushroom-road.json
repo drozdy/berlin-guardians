@@ -1,0 +1,48 @@
+{
+  "data": {
+    "slug": "mushroom-road",
+    "name": "Mushroom Road",
+    "heroImage": {
+      "alt": "Mushroom Road game artwork",
+      "width": 1920,
+      "height": 1080,
+      "sources": [
+        {
+          "type": "image/webp",
+          "srcset": "/assets/images/games/mushroom-road-hero.webp 1x, /assets/images/games/mushroom-road-hero@2x.webp 2x"
+        }
+      ],
+      "fallback": "/assets/images/games/mushroom-road-hero.jpg"
+    },
+    "rating": 4.5,
+    "likesCount": 12900,
+    "isLikedByCurrentUser": false,
+    "fullDescription": "Mushroom Road — a casual adventure about a snail traveling to the Great Mushroom Festival. You walk, hitch rides and trade stories with other travelers along the road. Each stop adds something to your backpack and a new rumor about the festival. It's slow, but that is the point.",
+    "specs": {
+      "genre": "Adventure",
+      "players": "Solo",
+      "duration": "40-70 min",
+      "price": "Free"
+    },
+    "topRecords": [
+      {
+        "position": 1,
+        "playerName": "SoftPaws",
+        "score": 36850,
+        "achievedAt": "2026-11-12T10:20:00Z"
+      },
+      {
+        "position": 2,
+        "playerName": "SleepyBear",
+        "score": 34500,
+        "achievedAt": "2026-11-09T17:45:00Z"
+      },
+      {
+        "position": 3,
+        "playerName": "RainDrop",
+        "score": 32150,
+        "achievedAt": "2026-11-03T08:30:00Z"
+      }
+    ]
+  }
+}
