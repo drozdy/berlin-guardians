@@ -19,9 +19,17 @@
   "license": "ISC",
   "type": "module",
   "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "build:dev": "tsc --noEmit && vite build --mode development",
+    "preview": "vite preview"
   },
   "devDependencies": {
-    "typescript": "~6.0.2",
-    "vite": "^8.3.0"
+    "typescript": "^5.9.3",
+    "vite": "^6.2.7"
+  },
+  "allowScripts": {
+    "fsevents@2.3.3": true,
+    "esbuild@0.25.12": true
   }
 }
