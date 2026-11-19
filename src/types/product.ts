@@ -1,4 +1,4 @@
 export type Product = {
-    slug: string,
-    name: string
-}
+  slug: string;
+  name: string;
+};

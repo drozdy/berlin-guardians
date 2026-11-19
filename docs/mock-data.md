@@ -27,7 +27,7 @@ Each list file has a `data` array and a `meta` object.
       "shortDescription": "You're a gourmet cow on a 9x9 field...",
       "rating": 4.9,
       "likesCount": 1520,
-      "cardImage": { }
+      "cardImage": {}
     }
   ],
   "meta": {
@@ -43,16 +43,16 @@ Each list file has a `data` array and a `meta` object.
 }
 ```
 
-| Field | Type | Description |
-|---|---|---|
-| `slug` | string | Unique game id, also used in file names and routes |
-| `name` | string | Display name |
-| `category` | string | One of `puzzle`, `arcade`, `strategy`, `farm`, `adventure`, `simulation`, `casual`, `music` |
-| `price` | string | `"Free"` or a price like `"$2.99"` |
-| `shortDescription` | string | One or two sentences for the catalog card |
-| `rating` | number | From 0 to 5 |
-| `likesCount` | number | Total likes |
-| `cardImage` | object | Card image (see [Images](#images)) |
+| Field              | Type   | Description                                                                                 |
+| ------------------ | ------ | ------------------------------------------------------------------------------------------- |
+| `slug`             | string | Unique game id, also used in file names and routes                                          |
+| `name`             | string | Display name                                                                                |
+| `category`         | string | One of `puzzle`, `arcade`, `strategy`, `farm`, `adventure`, `simulation`, `casual`, `music` |
+| `price`            | string | `"Free"` or a price like `"$2.99"`                                                          |
+| `shortDescription` | string | One or two sentences for the catalog card                                                   |
+| `rating`           | number | From 0 to 5                                                                                 |
+| `likesCount`       | number | Total likes                                                                                 |
+| `cardImage`        | object | Card image (see [Images](#images))                                                          |
 
 ### Game details
 
@@ -63,7 +63,7 @@ Each list file has a `data` array and a `meta` object.
   "data": {
     "slug": "moosweep",
     "name": "Moosweep",
-    "heroImage": { },
+    "heroImage": {},
     "rating": 4.9,
     "likesCount": 1520,
     "isLikedByCurrentUser": false,
@@ -86,13 +86,13 @@ Each list file has a `data` array and a `meta` object.
 }
 ```
 
-| Field | Type | Description |
-|---|---|---|
-| `heroImage` | object | Hero image (see [Images](#images)) |
-| `isLikedByCurrentUser` | boolean | Whether the current user liked the game |
-| `fullDescription` | string | Full description for the details page |
-| `specs` | object | `genre`, `players`, `duration`, `price` |
-| `topRecords` | array | Top results, each with `position`, `playerName`, `score` and `achievedAt` (ISO 8601). Can be empty |
+| Field                  | Type    | Description                                                                                        |
+| ---------------------- | ------- | -------------------------------------------------------------------------------------------------- |
+| `heroImage`            | object  | Hero image (see [Images](#images))                                                                 |
+| `isLikedByCurrentUser` | boolean | Whether the current user liked the game                                                            |
+| `fullDescription`      | string  | Full description for the details page                                                              |
+| `specs`                | object  | `genre`, `players`, `duration`, `price`                                                            |
+| `topRecords`           | array   | Top results, each with `position`, `playerName`, `score` and `achievedAt` (ISO 8601). Can be empty |
 
 ### Images
 
@@ -113,9 +113,9 @@ Each list file has a `data` array and a `meta` object.
 }
 ```
 
-| Image | Size (1x) | File pattern |
-|---|---|---|
-| Card | 460x215 | `<slug>-card.webp`, `<slug>-card@2x.webp`, `<slug>-card.jpg` |
-| Hero | 1920x1080 | `<slug>-hero.webp`, `<slug>-hero@2x.webp`, `<slug>-hero.jpg` |
+| Image | Size (1x) | File pattern                                                 |
+| ----- | --------- | ------------------------------------------------------------ |
+| Card  | 460x215   | `<slug>-card.webp`, `<slug>-card@2x.webp`, `<slug>-card.jpg` |
+| Hero  | 1920x1080 | `<slug>-hero.webp`, `<slug>-hero@2x.webp`, `<slug>-hero.jpg` |
 
 All images are stored in `public/assets/images/games/`.

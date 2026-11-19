@@ -60,5 +60,7 @@ export function createElement<K extends string>(
     element.append(...childElements);
   }
 
+  // TODO: remove when createElement is properly typed
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   return element as any;
 }

@@ -2,5 +2,5 @@
 import { createElement } from '../../utils/dom';
 
 export function createFooter(): HTMLElement {
-  return createElement('footer', { className: 'footer'});
+  return createElement('footer', { className: 'footer' });
 }

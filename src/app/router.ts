@@ -6,8 +6,8 @@ import {
   type RouteDefinition,
   type OpenDialog,
   DialogParameter,
-  Route
-} from '../types/routes.ts';
+  Route,
+} from '../types/routes';
 import { AuthMode } from '../types/auth';
 
 const ROUTES: ReadonlyMap<string, Route> = new Map([
@@ -210,7 +210,7 @@ export class Router {
   public onChange(listener: LocationListener): void {
     this.listeners.push(listener);
   }
-  
+
   public start(): void {
     globalThis.addEventListener('popstate', (): void => {
       this.update();

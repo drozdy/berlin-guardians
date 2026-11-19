@@ -1,4 +1,4 @@
-import { AuthMode } from "./auth";
+import { AuthMode } from './auth';
 
 export enum Route {
   Home = '/',
@@ -17,14 +17,14 @@ export interface AppLocation {
 export enum DialogParameter {
   Product = 'Product',
   Auth = 'auth',
-  Basket = 'basket'
+  Basket = 'basket',
 }
 
 // dialog's parameter
 export type OpenDialog =
   | { readonly parameter: DialogParameter.Product; readonly slug: string }
   | { readonly parameter: DialogParameter.Auth; readonly mode: AuthMode }
-  | { readonly parameter: DialogParameter.Basket};
+  | { readonly parameter: DialogParameter.Basket };
 
 export interface HistoryState {
   readonly isDialogEntry?: boolean;
