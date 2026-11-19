@@ -6,7 +6,7 @@ import {
   type RouteDefinition,
   type OpenDialog,
   DialogParameter,
-  Route
+  Route,
 } from '../types/routes';
 import { AuthMode } from '../types/auth';
 
@@ -210,7 +210,7 @@ export class Router {
   public onChange(listener: LocationListener): void {
     this.listeners.push(listener);
   }
-  
+
   public start(): void {
     globalThis.addEventListener('popstate', (): void => {
       this.update();

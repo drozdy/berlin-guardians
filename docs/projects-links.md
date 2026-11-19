@@ -56,4 +56,3 @@ Virtual Music Kit — a small interactive instrument you play in the browser. Cl
 A small tactical game about saving a forest from spreading fire. Start with one scout squirrel, find the towns, hire helpers and put the flames out. Coming soon.
 
 Forest Guardians — a small tactical game about saving the forest from a spreading fire. You start with a single squirrel scout on a 10x10 top-down map, find the towns, hire a hedgehog or a turtle and use their water to put the fire out. Hold on for 25 turns and keep at least 3 of 5 towns. If a town burns before you reach it, you can never hire there again.
-

@@ -70,9 +70,7 @@ export function createHeader(): Header {
     children: [
       createElement('div', {
         className: 'header__inner',
-        children: [
-          createNavigation(pageLinks),
-        ],
+        children: [createNavigation(pageLinks)],
       }),
     ],
   });
@@ -81,6 +79,6 @@ export function createHeader(): Header {
     element,
     setCurrentPage: (page: Route | undefined): void => {
       pageLinks.markCurrent(page);
-    }
+    },
   };
 }
