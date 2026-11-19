@@ -7,8 +7,8 @@ export interface CatalogPageOptions {
   readonly onNavigate: (query: URLSearchParams, isReplace: boolean) => void;
 }
 
-export function renderCatalogPage (title: string, location: AppLocation, options?: CatalogPageOptions): PageView {
-    let address: URLSearchParams = location.query;
+export function renderCatalogPage (title: string, _location: AppLocation, _options?: CatalogPageOptions): PageView {
+    // let address: URLSearchParams = location.query;
     
     return {
         elements: [ createElement('h1', {

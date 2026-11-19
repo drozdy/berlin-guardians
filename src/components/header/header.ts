@@ -1,4 +1,4 @@
-import { getRouteHref } from '../../app/router.ts';
+import { getRouteHref } from '../../app/router';
 import { Route } from './../../types/routes';
 import { createElement } from './../../utils/dom';
 import './header.css';

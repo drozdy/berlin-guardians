@@ -7,7 +7,7 @@ import {
   type OpenDialog,
   DialogParameter,
   Route
-} from '../types/routes.ts';
+} from '../types/routes';
 import { AuthMode } from '../types/auth';
 
 const ROUTES: ReadonlyMap<string, Route> = new Map([

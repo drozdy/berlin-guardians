@@ -1,4 +1,3 @@
-import { DialogParameter } from '../../types/routes';
 import { createElement } from './../../utils/dom';
 import './modal.css';
 
