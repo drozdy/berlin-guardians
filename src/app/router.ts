@@ -1,11 +1,14 @@
-import type {
-  AppLocation,
-  HistoryState,
-  PageDefinition,
-  PageView,
-  RouteDefinition,
-} from './../types/routs.ts';
-import { Route } from './../types/routs.ts';
+import {
+  type AppLocation,
+  type HistoryState,
+  type PageDefinition,
+  type PageView,
+  type RouteDefinition,
+  type OpenDialog,
+  DialogParameter,
+  Route
+} from '../types/routes.ts';
+import { AuthMode } from '../types/auth';
 
 const ROUTES: ReadonlyMap<string, Route> = new Map([
   ['/', Route.Home],
@@ -13,6 +16,8 @@ const ROUTES: ReadonlyMap<string, Route> = new Map([
   ['/catalog', Route.Catalog],
   ['/profile', Route.Profile],
 ]);
+
+const AUTH_MODES: ReadonlySet<string> = new Set<string>(Object.values(AuthMode));
 
 const BASE_PATH: string = import.meta.env.BASE_URL;
 
@@ -28,6 +33,14 @@ export interface NavigationOptions {
 
 type LocationListener = (location: AppLocation) => void;
 
+export function isRecord(value: unknown): value is Readonly<Record<string, unknown>> {
+  return typeof value === 'object' && value !== null && !Array.isArray(value);
+}
+
+function isAuthMode(value: string): value is AuthMode {
+  return AUTH_MODES.has(value);
+}
+
 export function parseRoute(path: string): Route | undefined {
   return ROUTES.get(path);
 }
@@ -35,6 +48,27 @@ export function parseRoute(path: string): Route | undefined {
 // The real address of a page, so a link to it also works in a new tab
 export function getRouteHref(route: Route): string {
   return toBrowserUrl(route, new URLSearchParams(), BASE_PATH);
+}
+
+export function parseDialog(query: URLSearchParams): OpenDialog | undefined {
+  const productSlug: string = query.get(DialogParameter.Product)?.trim() ?? '';
+  const authModeRaw: string = query.get(DialogParameter.Auth)?.trim() ?? '';
+
+  const hasProduct: boolean = productSlug !== '';
+  const hasAuth: boolean = isAuthMode(authModeRaw);
+
+  // ignore is mode than one page param applied
+  if (hasProduct && hasAuth && isAuthMode(authModeRaw)) {
+    return undefined;
+  }
+  if (hasProduct) {
+    return { parameter: DialogParameter.Product, slug: productSlug };
+  }
+  if (hasAuth && isAuthMode(authModeRaw)) {
+    return { parameter: DialogParameter.Auth, mode: authModeRaw };
+  }
+
+  return undefined;
 }
 
 // Where the browser is now, in the app's terms
@@ -169,13 +203,14 @@ export class Router {
   }
 
   public get isDialogEntry(): boolean {
-    return globalThis.history.state.isDialogEntry;
+    const state: unknown = globalThis.history.state;
+    return isRecord(state) && state.isDialogEntry === true;
   }
 
   public onChange(listener: LocationListener): void {
     this.listeners.push(listener);
   }
-
+  
   public start(): void {
     globalThis.addEventListener('popstate', (): void => {
       this.update();

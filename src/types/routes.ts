@@ -15,14 +15,16 @@ export interface AppLocation {
 
 // keys allowed for query
 export enum DialogParameter {
-  Game = 'game',
+  Product = 'Product',
   Auth = 'auth',
+  Basket = 'basket'
 }
 
 // dialog's parameter
 export type OpenDialog =
-  | { readonly parameter: DialogParameter.Game; readonly slug: string }
-  | { readonly parameter: DialogParameter.Auth; readonly mode: AuthMode };
+  | { readonly parameter: DialogParameter.Product; readonly slug: string }
+  | { readonly parameter: DialogParameter.Auth; readonly mode: AuthMode }
+  | { readonly parameter: DialogParameter.Basket};
 
 export interface HistoryState {
   readonly isDialogEntry?: boolean;
