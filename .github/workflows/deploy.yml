@@ -48,6 +48,18 @@ jobs:
         with:
           path: dist
 
+      - name: Prevent server error response before SPA router loaded from scripts
+        run: cp dist/index.html dist/404.html
+
+      # Prevent 404 redirect
+      - name: Serve the app for its pages
+        run: |
+          cp dist/index.html dist/home.html
+          cp dist/index.html dist/catalog.html
+          cp dist/index.html dist/basket.html
+          cp dist/index.html dist/profile.html
+          cp dist/index.html dist/about.html         
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
