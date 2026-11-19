@@ -34,31 +34,26 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # The Firebase web app config comes from the repository variables, under
-      # the names of .env.example
       - name: Build
-        run: npm run build -- --base="${{ steps.pages.outputs.base_path }}/"
+        run: npm run build -- --base="${{ steps.pages.outputs.base_path }}"
         env:
           VITE_FIREBASE_API_KEY: ${{ secrets.VITE_FIREBASE_API_KEY }}
           VITE_FIREBASE_AUTH_DOMAIN: ${{ vars.VITE_FIREBASE_AUTH_DOMAIN }}
           VITE_FIREBASE_PROJECT_ID: ${{ vars.VITE_FIREBASE_PROJECT_ID }}
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-      - name: Prevent server error response before SPA router loaded from scripts
-        run: cp dist/index.html dist/404.html
-
-      # Prevent 404 redirect
-      - name: Serve the app for its pages
+      - name: Prepare SPA fallback and page copies
         run: |
+          cp dist/index.html dist/404.html
           cp dist/index.html dist/home.html
           cp dist/index.html dist/catalog.html
           cp dist/index.html dist/basket.html
           cp dist/index.html dist/profile.html
-          cp dist/index.html dist/about.html         
+          cp dist/index.html dist/about.html
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
 
   deploy:
     needs: build
