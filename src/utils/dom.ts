@@ -55,9 +55,9 @@ export function createElement<K extends string>(
     }
   }
 
-  const kids = options.children;
-  if (kids && kids.length > 0) {
-    element.append(...kids);
+  const childElements = options.children;
+  if (childElements && childElements.length > 0) {
+    element.append(...childElements);
   }
 
   return element as any;
