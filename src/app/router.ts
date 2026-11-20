@@ -9,6 +9,7 @@ import {
   Route,
 } from '../types/routes';
 import { AuthMode } from '../types/auth';
+import { isRecord, toAppPath, toBrowserUrl } from '../utils/url';
 
 const ROUTES: ReadonlyMap<string, Route> = new Map([
   ['/', Route.Home],
@@ -33,21 +34,12 @@ export interface NavigationOptions {
 
 type LocationListener = (location: AppLocation) => void;
 
-export function isRecord(value: unknown): value is Readonly<Record<string, unknown>> {
-  return typeof value === 'object' && value !== null && !Array.isArray(value);
-}
-
 function isAuthMode(value: string): value is AuthMode {
   return AUTH_MODES.has(value);
 }
 
 export function parseRoute(path: string): Route | undefined {
   return ROUTES.get(path);
-}
-
-// The real address of a page, so a link to it also works in a new tab
-export function getRouteHref(route: Route): string {
-  return toBrowserUrl(route, new URLSearchParams(), BASE_PATH);
 }
 
 export function parseDialog(query: URLSearchParams): OpenDialog | undefined {
@@ -57,7 +49,7 @@ export function parseDialog(query: URLSearchParams): OpenDialog | undefined {
   const hasProduct: boolean = productSlug !== '';
   const hasAuth: boolean = isAuthMode(authModeRaw);
 
-  // ignore is mode than one page param applied
+  // ignore if more than one dialog parameter is set
   if (hasProduct && hasAuth && isAuthMode(authModeRaw)) {
     return undefined;
   }
@@ -104,27 +96,6 @@ function findAppLink(target: EventTarget | null): URL | undefined {
   const url: URL = new URL(link.href);
 
   return url.origin === globalThis.location.origin ? url : undefined;
-}
-
-function trimTrailingSlashes(path: string): string {
-  return path.replace(/\/+$/, '');
-}
-
-export function toAppPath(pathname: string, base: string): string | undefined {
-  const root: string = trimTrailingSlashes(base);
-  if (pathname !== root && !pathname.startsWith(`${root}/`)) {
-    return undefined;
-  }
-  const path: string = trimTrailingSlashes(pathname.slice(root.length));
-
-  return path === '' ? '/' : path;
-}
-
-// handler for deployment to includes path like gh-page domain.io/berlin-guardians/route-part
-export function toBrowserUrl(path: string, query: URLSearchParams, base: string): string {
-  const search: string = query.toString();
-
-  return `${trimTrailingSlashes(base)}${path}${search === '' ? '' : `?${search}`}`;
 }
 
 export class Router {

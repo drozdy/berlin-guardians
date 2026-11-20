@@ -59,7 +59,7 @@ export interface AuthFormContent {
   readonly switchLinkText: string;
 }
 
-// ligin/registration fields
+// login/registration fields
 export type AuthRequest =
   | {
       readonly mode: AuthMode.Login;
