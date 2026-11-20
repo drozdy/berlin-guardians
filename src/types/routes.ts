@@ -17,14 +17,12 @@ export interface AppLocation {
 export enum DialogParameter {
   Product = 'Product',
   Auth = 'auth',
-  Basket = 'basket',
 }
 
 // dialog's parameter
 export type OpenDialog =
   | { readonly parameter: DialogParameter.Product; readonly slug: string }
-  | { readonly parameter: DialogParameter.Auth; readonly mode: AuthMode }
-  | { readonly parameter: DialogParameter.Basket };
+  | { readonly parameter: DialogParameter.Auth; readonly mode: AuthMode };
 
 export interface HistoryState {
   readonly isDialogEntry?: boolean;
