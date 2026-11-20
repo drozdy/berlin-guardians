@@ -1,0 +1,135 @@
+/* reset */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--bg);
+  color: var(--on-bg);
+  font-family: var(--inter), system-ui, sans-serif;
+  font-size: var(--body-medium);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+main {
+  flex: 1;
+}
+
+img,
+picture,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  padding: 0;
+  list-style: none;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+/* typography */
+h1,
+h2,
+h3 {
+  color: var(--on-bg);
+  font-weight: 700;
+}
+
+h1 {
+  font-size: var(--display-large);
+}
+
+h2 {
+  font-size: var(--headline-large);
+}
+
+h3 {
+  font-size: var(--display-small);
+}
+
+/* layout */
+.container {
+  width: 100%;
+  max-width: 1680px;
+  margin-inline: auto;
+  padding-inline: var(--size-3);
+}
+
+/* accessibility */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* mobile */
+@media (max-width: 768px) {
+  h1 {
+    font-size: var(--display-medium);
+  }
+
+  h2 {
+    font-size: var(--headlline-medium);
+  }
+
+  .container {
+    padding-inline: var(--size-2);
+  }
+}
