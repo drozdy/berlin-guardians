@@ -1,21 +1,23 @@
 type ElementChild = Node | string;
 
+type EventHandlers = {
+  [E in keyof HTMLElementEventMap]?: (event: HTMLElementEventMap[E]) => void;
+};
+
 export interface CreateElementOptions {
   className?: string;
   text?: string;
   attributes?: Readonly<Record<string, string>>;
   dataset?: Readonly<Record<string, string>>;
-  events?: {
-    [K in keyof HTMLElementEventMap]?: (event: HTMLElementEventMap[K]) => void;
-  };
+  events?: EventHandlers;
   children?: readonly ElementChild[];
 }
 
-export function createElement<K extends string>(
+export function createElement<K extends keyof HTMLElementTagNameMap>(
   tagName: K,
   options: CreateElementOptions = {},
-): K extends keyof HTMLElementTagNameMap ? HTMLElementTagNameMap[K] : HTMLElement {
-  const element = document.createElement(tagName);
+): HTMLElementTagNameMap[K] {
+  const element: HTMLElementTagNameMap[K] = document.createElement(tagName);
 
   if (options.className !== undefined) {
     element.className = options.className;
@@ -25,42 +27,22 @@ export function createElement<K extends string>(
     element.textContent = options.text;
   }
 
-  const attrs = options.attributes;
-  if (attrs) {
-    for (const name in attrs) {
-      if (Object.prototype.hasOwnProperty.call(attrs, name)) {
-        element.setAttribute(name, attrs[name]);
-      }
+  for (const [name, value] of Object.entries(options.attributes ?? {})) {
+    element.setAttribute(name, value);
+  }
+
+  for (const [key, value] of Object.entries(options.dataset ?? {})) {
+    element.dataset[key] = value;
+  }
+
+  for (const [name, handler] of Object.entries(options.events ?? {})) {
+    if (handler !== undefined) {
+      // the event name comes from a loop, so TypeScript cannot match it to its handler type
+      element.addEventListener(name, handler as EventListener);
     }
   }
 
-  const ds = options.dataset;
-  if (ds) {
-    for (const key in ds) {
-      if (Object.prototype.hasOwnProperty.call(ds, key)) {
-        element.dataset[key] = ds[key];
-      }
-    }
-  }
+  element.append(...(options.children ?? []));
 
-  const evs = options.events;
-  if (evs) {
-    for (const eventName in evs) {
-      if (Object.prototype.hasOwnProperty.call(evs, eventName)) {
-        const handler = evs[eventName as keyof HTMLElementEventMap];
-        if (handler) {
-          element.addEventListener(eventName, handler as EventListener);
-        }
-      }
-    }
-  }
-
-  const childElements = options.children;
-  if (childElements && childElements.length > 0) {
-    element.append(...childElements);
-  }
-
-  // TODO: remove when createElement is properly typed
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  return element as any;
+  return element;
 }
