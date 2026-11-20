@@ -1,8 +1,8 @@
-import { createElement } from './../../utils/dom';
+import { createElement } from '../../utils/dom';
 import './modal.css';
 
 export interface ModalDialog {
-  readonly element: HTMLElement;
+  readonly element: HTMLDialogElement;
   readonly content: HTMLElement;
   readonly show: () => void;
   readonly hide: () => void;
@@ -36,51 +36,63 @@ export function createDialogModal(
     className: 'modal-content',
   });
 
-  const modalWindow: HTMLDivElement = createElement('div', {
+  const dialog: HTMLDialogElement = createElement('dialog', {
     className: 'modal-dialog',
     children: [closeButton, modalTitle, content],
   });
 
-  const modalOverlay: HTMLDivElement = createElement('div', {
-    className: 'modal-overlay',
-    children: [modalWindow],
-  });
-
-  const hide = (): void => {
-    modalOverlay.classList.remove('active');
-    options?.onClose?.();
+  const show = (): void => {
+    if (!dialog.open) {
+      dialog.showModal();
+    }
   };
 
-  const show = (): void => {
-    modalOverlay.classList.add('active');
+  const hide = (): void => {
+    if (dialog.open) {
+      dialog.close();
+    }
   };
 
   const setTitle = (title: string): void => {
     modalTitle.textContent = title;
   };
 
-  if (isOpen) {
-    show();
+  function isClickOutsideRect(event: MouseEvent, rect: DOMRect): boolean {
+    return (
+      event.clientX < rect.left ||
+      event.clientX > rect.right ||
+      event.clientY < rect.top ||
+      event.clientY > rect.bottom
+    );
   }
 
   closeButton.addEventListener('click', (): void => {
     hide();
   });
 
-  modalOverlay.addEventListener('click', (event: MouseEvent): void => {
-    if (event.target === modalOverlay) {
+  // Close <dialog> on click outside of content
+  dialog.addEventListener('click', (event: MouseEvent): void => {
+    if (event.target !== dialog) {
+      return;
+    }
+
+    const rect: DOMRect = dialog.getBoundingClientRect();
+    if (isClickOutsideRect(event, rect)) {
       hide();
     }
   });
 
-  document.addEventListener('keydown', (event: KeyboardEvent): void => {
-    if (event.key === 'Escape' && modalOverlay.classList.contains('active')) {
-      hide();
-    }
+  // Close should work on Escape
+  dialog.addEventListener('close', (): void => {
+    options?.onClose?.();
   });
+
+  if (isOpen) {
+    show();
+  }
 
   return {
-    element: modalOverlay,
+    element: dialog,
     content,
     show,
     hide,
