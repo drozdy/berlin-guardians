@@ -15,7 +15,7 @@ export interface ModalDialogOptions {
 
 export function createDialogModal(
   initialTitle: string,
-  isOpen: boolean,
+  // isOpen: boolean,
   options?: ModalDialogOptions,
 ): ModalDialog {
   const closeButton: HTMLButtonElement = createElement('button', {
@@ -87,9 +87,9 @@ export function createDialogModal(
     options?.onClose?.();
   });
 
-  if (isOpen) {
-    show();
-  }
+  // if (isOpen) {
+  //   show();
+  // }
 
   return {
     element: dialog,

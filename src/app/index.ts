@@ -44,11 +44,15 @@ function initApp(): void {
 
   const header: Header = createHeader();
 
-  const modal: ModalDialog = createDialogModal('', false, {
-    onClose: (): void => {
-      dialogController?.closeDialogInUrl();
+  const modal: ModalDialog = createDialogModal(
+    '',
+    /*false,*/
+    {
+      onClose: (): void => {
+        dialogController?.closeDialogInUrl();
+      },
     },
-  });
+  );
 
   const dialogController: DialogController | undefined = createDialogController(router, modal);
 
