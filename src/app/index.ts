@@ -1,4 +1,5 @@
 import './../styles/tokens.css';
+import './../styles/base.css';
 import { createElement } from './../utils/dom';
 import { createFooter } from '../components/footer/footer';
 import { type Header, createHeader } from '../components/header/header';

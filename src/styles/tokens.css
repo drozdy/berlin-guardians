@@ -2,34 +2,48 @@
   /* colors-base */
   --white: #ffffff;
   --black: #000000;
+
   /* colors-general */
-  --bg: #f9f8f3;
-  --on-bg: #5f5d75;
-  --on-bg-low: #737380;
-  --bg-footer: #1e1b3a;
-  --bg-footer-low: #2a264f;
-  --bg-footer-lowest: #3c376e;
-  --on-bg-footer: #b9b5c9;
-  --surface: #fff9e5;
-  --surface-low: #fff9c5;
-  --primary: #ffd02b;
-  --primary-low: #fde047;
-  --primary-high: #e5bb00;
-  --on-primary: #242145;
-  --secondary: #f0eeff;
-  --tertiary: #3a2ebf;
-  --like: #ff4b4b;
-  --error: #b3261e;
-  --price-free: #0b8a8f;
+  --bg: #171820;
+  --on-bg: #f2e9e2;
+  --on-bg-low: #b9b3c2;
+  --bg-footer: #14151d;
+  --bg-footer-low: #20212b;
+  --bg-footer-lowest: #2b2d39;
+  --on-bg-footer: #c9c4d0;
+  --surface: #20212b;
+  --surface-low: #2b2d39;
+  --primary: #ffc928;
+  --primary-low: #ffd95c;
+  --primary-high: #e5a900;
+  --on-primary: #171820;
+  --secondary: #383a48;
+  --tertiary: #a99aaf;
+  --like: #ff6574;
+  --error: #ff7777;
+  --price-free: #75b9b8;
+
   /* colors for borders */
-  --outline: #e5e7eb;
-  --outline-variant: #d2d2d2;
+  --outline: #777384;
+  --outline-variant: #555363;
+
   /* colors additional */
-  --avatar-random-1: #e9eef6;
-  --avatar-random-2: #a3e2c9;
-  --avatar-random-3: #bce3ff;
-  --avatar-random-4: #ffc6ff;
-  --avatar-random-5: #e8dff5;
+  --avatar-random-1: #dce6f0;
+  --avatar-random-2: #b9e5d4;
+  --avatar-random-3: #c7e4f7;
+  --avatar-random-4: #f4c9e9;
+  --avatar-random-5: #ded3ef;
+
+  /* additional semantic colors */
+  --success: #9bae72;
+  --warning: #ffc928;
+  --info: #75b9b8;
+  --focus-ring: #75b9b8;
+  --overlay: #0b0c12cc;
+  --surface-hover: #383a48;
+  --surface-active: #454756;
+  --on-secondary: #f2e9e2;
+  --on-tertiary: #171820;
 
   /* sizes */
   --size-05: 4px;
@@ -48,10 +62,12 @@
   --size-13: 104px;
   --size-14: 112px;
   --size-15: 120px;
+
   /* shadows */
   --level-1: 4px 4px;
   --level-2: 6px 6px;
   --level-3: 8px 8px;
+
   /* corner radius */
   --corner-extra-small: 4px;
   --corner-small: 8px;
@@ -64,11 +80,11 @@
   --btn-large: 16px 24px;
   --btn-medium: 10px 20px;
   --btn-small: 8px 16px;
-  --btm-icon: 8px;
+  --btn-icon: 8px;
 
   /* font families */
   --inter: 'Inter';
-  --rototo: 'Roboto';
+  --roboto: 'Roboto';
 
   /*font sizes */
   --display-large: 56px;
@@ -76,7 +92,7 @@
   --display-small: 24px;
 
   --headline-large: 32px;
-  --headlline-medium: 24px;
+  --headline-medium: 24px;
   --btn-large-lineheight: 20px;
 
   --body-large: 18px;
