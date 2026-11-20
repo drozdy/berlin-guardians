@@ -32,7 +32,11 @@ export class PageLinks {
 
   public markCurrent(currentPage: Route | undefined): void {
     for (const link of this.links) {
-      link.element.setAttribute('aria-current', link.page === currentPage ? 'page' : 'false');
+      if (link.page === currentPage) {
+        link.element.setAttribute('aria-current', 'page');
+      } else {
+        link.element.removeAttribute('aria-current');
+      }
     }
   }
 }

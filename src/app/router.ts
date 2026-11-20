@@ -49,7 +49,7 @@ export function parseDialog(query: URLSearchParams): OpenDialog | undefined {
   const hasProduct: boolean = productSlug !== '';
   const hasAuth: boolean = isAuthMode(authModeRaw);
 
-  // ignore is mode than one page param applied
+  // ignore if more than one dialog parameter is set
   if (hasProduct && hasAuth && isAuthMode(authModeRaw)) {
     return undefined;
   }
