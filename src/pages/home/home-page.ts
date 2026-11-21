@@ -1,4 +1,5 @@
 import { createProductCard } from '../../components/product-card/product-card';
+import { createButton } from '../../components/ui/button/button';
 import { Category, type Product } from '../../types/product';
 import { Route, type PageView } from '../../types/routes';
 import { createElement } from './../../utils/dom';
@@ -18,6 +19,26 @@ const IMAGE = {
 };
 
 const PREVIEW: readonly Product[] = [
+  {
+    slug: 'moosweep',
+    name: 'Moosweep',
+    category: Category.Arcade,
+    priceCents: 0,
+    status: 'available',
+    isFeatured: true,
+    shortDescription: '',
+    cardImage: IMAGE,
+  },
+  {
+    slug: 'moosweep',
+    name: 'Moosweep',
+    category: Category.Arcade,
+    priceCents: 0,
+    status: 'available',
+    isFeatured: true,
+    shortDescription: '',
+    cardImage: IMAGE,
+  },
   {
     slug: 'moosweep',
     name: 'Moosweep',
@@ -52,9 +73,12 @@ export function renderHomePage(options?: { title?: string }): PageView {
           style: 'display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:24px',
         },
         children: PREVIEW.map((product: Product): HTMLElement =>
-          createProductCard(product, Route.Home),
+          createProductCard(product, { route: Route.Home, headingLevel: 3 }),
         ),
       }),
+      createButton({ text: 'Play now', size: 'large' }),
+      createButton({ text: 'Play now', size: 'medium' }),
+      createButton({ text: 'Play now', size: 'small' }),
     ],
   };
 }
