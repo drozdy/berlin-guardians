@@ -3,7 +3,7 @@
     "slug": "pair-em-up",
     "name": "Pair 'em Up",
     "heroImage": {
-      "alt": "Pair 'em Up game artwork",
+      "alt": "A number-matching puzzle with a grid of numbers and a highlighted cell, featuring tools to clear pairs that match or add up to 10",
       "width": 1920,
       "height": 1080,
       "sources": [
