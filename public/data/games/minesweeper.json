@@ -3,7 +3,7 @@
     "slug": "minesweeper",
     "name": "Minesweeper",
     "heroImage": {
-      "alt": "Minesweeper game artwork",
+      "alt": "A classic minesweeper game with a partially revealed grid, numbered cells and hidden mines to uncover",
       "width": 1920,
       "height": 1080,
       "sources": [
