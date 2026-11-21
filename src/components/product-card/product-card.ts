@@ -3,6 +3,7 @@ import type { Route } from '../../types/routes';
 import { createElement } from '../../utils/dom';
 import { formatPrice } from '../../utils/format';
 import { getProductHref } from '../../utils/url';
+import { createBadge } from '../ui/badge/badge';
 import { createPicture } from '../ui/picture/picture';
 import './product-card.css';
 
@@ -10,12 +11,9 @@ function createMedia(product: Product, isAvailable: boolean): HTMLElement {
   const children: HTMLElement[] = [createPicture(product.cardImage, 'product-card__picture')];
 
   if (!isAvailable) {
-    children.push(
-      createElement('span', {
-        className: 'product-card__badge',
-        text: 'Coming soon',
-      }),
-    );
+    const badge: HTMLElement = createBadge('Coming soon');
+    badge.classList.add('product-card__badge');
+    children.push(badge);
   }
 
   return createElement('div', {
