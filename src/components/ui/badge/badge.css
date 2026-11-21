@@ -1,9 +1,22 @@
 .badge {
   display: inline-block;
-  padding: var(--size-05) var(--size-1);
+  padding: var(--size-05) var(--size-2);
   border-radius: var(--corner-full);
   background: var(--primary);
   color: var(--on-primary);
-  font-size: 12px;
-  font-weight: 700;
+  box-shadow: var(--level-1);
+  font-size: var(--label-large);
+  font-weight: var(--weight-bold);
+  line-height: var(--line-height-normal);
+  white-space: nowrap;
+}
+
+.badge--price-free {
+  background: var(--price-free);
+}
+
+@media (forced-colors: active) {
+  .badge {
+    border: var(--border-width) solid CanvasText;
+  }
 }

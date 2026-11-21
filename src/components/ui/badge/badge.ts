@@ -1,6 +1,11 @@
 import { createElement } from '../../../utils/dom';
 import './badge.css';
 
-export function createBadge(text: string): HTMLSpanElement {
-  return createElement('span', { className: 'badge', text });
+export type BadgeVariant = 'accent' | 'price-free' | 'price-paid';
+
+export function createBadge(text: string, variant: BadgeVariant = 'accent'): HTMLSpanElement {
+  return createElement('span', {
+    className: variant === 'accent' ? 'badge' : `badge badge--${variant}`,
+    text,
+  });
 }
