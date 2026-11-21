@@ -1,4 +1,4 @@
-import type { Route } from '../types/routes';
+import { DialogParameter, type Route } from '../types/routes';
 
 export const BASE_PATH: string = import.meta.env.BASE_URL;
 
@@ -30,4 +30,11 @@ export function toBrowserUrl(path: string, query: URLSearchParams, base: string)
 // The real address of a page, so a link to it also works in a new tab
 export function getRouteHref(route: Route): string {
   return toBrowserUrl(route, new URLSearchParams(), BASE_PATH);
+}
+
+// A link that opens the product dialog on top of the given page
+export function getProductHref(slug: string, route: Route): string {
+  const query: URLSearchParams = new URLSearchParams({ [DialogParameter.Product]: slug });
+
+  return toBrowserUrl(route, query, BASE_PATH);
 }
