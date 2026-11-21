@@ -4,6 +4,7 @@ import { Category, type Product } from '../../types/product';
 import { Route, type PageView } from '../../types/routes';
 import { createElement } from './../../utils/dom';
 
+// TODO: remove - temporary demo
 const IMAGE = {
   alt: 'A cute brown-and-white cow standing in a fenced grassy field',
   width: 460,
@@ -60,6 +61,7 @@ const PREVIEW: readonly Product[] = [
     cardImage: IMAGE,
   },
 ];
+// TODO: remove (end) - temporary demo
 
 export function renderHomePage(options?: { title?: string }): PageView {
   return {
@@ -68,6 +70,7 @@ export function renderHomePage(options?: { title?: string }): PageView {
         text: options?.title || 'Home Page',
       }),
 
+      // TODO: remove - temporary demo
       createElement('div', {
         attributes: {
           style: 'display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:24px',
@@ -79,6 +82,7 @@ export function renderHomePage(options?: { title?: string }): PageView {
       createButton({ text: 'Play now', size: 'large' }),
       createButton({ text: 'Play now', size: 'medium' }),
       createButton({ text: 'Play now', size: 'small' }),
+      // TODO: remove (end) - temporary demo
     ],
   };
 }
