@@ -11,6 +11,26 @@ npm ci
 npm run dev
 ```
 
+## Project structure
+
+```
+src/
+  app/            app entry, router, dialog controller
+  assets/         static assets used in code
+  components/     reusable blocks (header, footer, modal, product card, product grid)
+    ui/           small generic elements (badge, button, picture, section header, skip link)
+  pages/          one folder per page (home, catalog, profile, 404)
+    home/sections/  blocks used only on the home page
+  styles/         design tokens and base styles
+  types/          types and enums only
+  utils/          pure helpers (DOM, URL, formatting)
+tests/            unit tests, same layout as src/
+public/
+  assets/images/  game images
+  data/           mock API responses
+docs/             mock data, projects, design
+```
+
 ## Design
 
 Design tokens, components and accessibility rules are described in [docs/design.md](docs/design.md).
