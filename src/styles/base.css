@@ -146,6 +146,11 @@ h4 {
   white-space: nowrap;
 }
 
+/* main is focused only by the skip link */
+main:focus-visible {
+  outline: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

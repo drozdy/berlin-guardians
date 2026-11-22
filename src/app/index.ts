@@ -17,6 +17,7 @@ import { type DialogController, createDialogController } from './dialog-controll
 import { renderHomePage } from '../pages/home/home-page';
 import { renderCatalogPage } from '../pages/catalog/catalog-page';
 import { renderNotFoundPage } from '../pages/404/not-found-page';
+import { createSkipLink } from '../components/ui/skip-link/skip-link';
 
 const APP_TITLE = 'Berlin guardians';
 const APP_CATALOG_TITLE = `Catalog | ${APP_TITLE}`;
@@ -40,7 +41,10 @@ function initApp(): void {
     render: (): PageView => renderNotFoundPage(),
   };
 
-  const main: HTMLElement = createElement('main');
+  const main: HTMLElement = createElement('main', {
+    attributes: { id: 'main-content', tabindex: '-1' },
+  });
+
   const router: Router = new Router(routes, notFound, main);
 
   const header: Header = createHeader();
@@ -57,7 +61,7 @@ function initApp(): void {
 
   const dialogController: DialogController | undefined = createDialogController(router, modal);
 
-  document.body.append(header.element, main, createFooter(), modal.element);
+  document.body.append(createSkipLink(main), header.element, main, createFooter(), modal.element);
 
   router.onChange((location: AppLocation): void => {
     header.setCurrentPage(location.route);
