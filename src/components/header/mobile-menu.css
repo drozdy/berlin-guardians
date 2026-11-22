@@ -69,6 +69,12 @@
   width: 100%;
 }
 
+@media (hover: hover) {
+  .mobile-menu__nav .header__nav-link:not([aria-current='page']):hover {
+    border-inline-start-color: var(--outline);
+  }
+}
+
 @media (min-width: 60em) {
   .mobile-menu {
     display: none;

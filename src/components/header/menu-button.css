@@ -3,10 +3,6 @@
   --bar-shift: calc(var(--size-05) + var(--bar));
 }
 
-.menu-button[aria-expanded='true'] {
-  /* background: var(--secondary); */
-}
-
 .menu-button__bars {
   display: flex;
   flex-direction: column;
@@ -35,12 +31,10 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .menu-button,
   .menu-button__bar {
     transition:
       transform var(--duration-fast) var(--easing-standard),
-      opacity var(--duration-fast) var(--easing-standard),
-      background-color var(--duration-fast) var(--easing-standard);
+      opacity var(--duration-fast) var(--easing-standard);
   }
 }
 

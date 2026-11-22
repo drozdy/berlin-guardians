@@ -15,8 +15,10 @@
 @media (prefers-reduced-motion: no-preference) {
   .btn {
     transition:
-      background var(--duration-fast) var(--easing-standard),
-      transform var(--duration-fast) var(--easing-standard);
+      background-color var(--duration-fast) var(--easing-standard),
+      border-color var(--duration-fast) var(--easing-standard),
+      color var(--duration-fast) var(--easing-standard),
+      box-shadow var(--duration-fast) var(--easing-standard);
   }
 }
 
@@ -59,7 +61,6 @@
 
 .btn--primary:active {
   background: var(--primary-high);
-  transform: translateY(0);
 }
 
 .btn--outline {
@@ -72,11 +73,11 @@
   .btn--primary:hover {
     background: var(--primary-low);
     box-shadow: var(--level-2);
-    transform: translateY(calc(var(--size-05) * -1));
   }
 
   .btn--outline:hover {
-    background: var(--secondary);
+    border-color: var(--primary);
+    color: var(--primary);
   }
 }
 

@@ -63,6 +63,27 @@
   color: var(--on-bg);
 }
 
+@media (prefers-reduced-motion: no-preference) {
+  .header__brand,
+  .header__nav-link {
+    transition:
+      color var(--duration-medium) var(--easing-standard),
+      border-color var(--duration-medium) var(--easing-standard);
+  }
+}
+
+@media (hover: hover) {
+  .header__brand:hover {
+    color: var(--primary);
+  }
+
+  /* the current page keeps its own style */
+  .header__nav-link:not([aria-current='page']):hover {
+    border-bottom-color: var(--outline);
+    color: var(--on-bg);
+  }
+}
+
 @media (min-width: 60em) {
   .header__nav {
     display: block;
