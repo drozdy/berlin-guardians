@@ -4,17 +4,16 @@ The catalog runs on static JSON files that mimic API responses. They live in `pu
 
 ```
 public/data/
-  games.json            # page 1 (10 items) + meta
-  games-page-2.json     # page 2 (10 items)
-  games-page-3.json     # page 3 (4 items)
   games-all.json        # all 24 items in a single list
   games/
     <slug>.json         # details for a single game (24 files)
 ```
 
+Static files cannot filter or paginate on their own. Filtering, sorting and paging are done on the client by pure functions, the file only provides the data.
+
 ### Games list
 
-Each list file has a `data` array and a `meta` object.
+`games-all.json` has a `data` array and a `meta` object.
 
 ```json
 {
@@ -23,36 +22,34 @@ Each list file has a `data` array and a `meta` object.
       "slug": "moosweep",
       "name": "Moosweep",
       "category": "arcade",
-      "price": "Free",
+      "priceCents": 0,
+      "status": "available",
+      "isFeatured": true,
       "shortDescription": "You're a gourmet cow on a 9x9 field...",
-      "rating": 4.9,
-      "likesCount": 1520,
       "cardImage": {}
     }
   ],
   "meta": {
     "page": 1,
-    "limit": 10,
+    "limit": 24,
     "totalItems": 24,
-    "totalPages": 3,
-    "appliedFilter": {
-      "category": "all",
-      "sort": "rating-desc"
-    }
+    "totalPages": 1
   }
 }
 ```
 
-| Field              | Type   | Description                                                                                 |
-| ------------------ | ------ | ------------------------------------------------------------------------------------------- |
-| `slug`             | string | Unique game id, also used in file names and routes                                          |
-| `name`             | string | Display name                                                                                |
-| `category`         | string | One of `puzzle`, `arcade`, `strategy`, `farm`, `adventure`, `simulation`, `casual`, `music` |
-| `price`            | string | `"Free"` or a price like `"$2.99"`                                                          |
-| `shortDescription` | string | One or two sentences for the catalog card                                                   |
-| `rating`           | number | From 0 to 5                                                                                 |
-| `likesCount`       | number | Total likes                                                                                 |
-| `cardImage`        | object | Card image (see [Images](#images))                                                          |
+`meta` describes the file as a single page with all items. The app does not rely on it for the catalog: it filters, sorts and paginates the `data` array itself.
+
+| Field              | Type    | Description                                                                                 |
+| ------------------ | ------- | ------------------------------------------------------------------------------------------- |
+| `slug`             | string  | Unique game id, also used in file names, routes and element ids                             |
+| `name`             | string  | Display name                                                                                |
+| `category`         | string  | One of `puzzle`, `arcade`, `strategy`, `farm`, `adventure`, `simulation`, `music`, `casual` |
+| `priceCents`       | number  | Price in cents as an integer, `0` means Free. Formatted for display by `formatPrice`        |
+| `status`           | string  | `"available"` or `"coming-soon"`. Coming soon games cannot be opened or added to the cart   |
+| `isFeatured`       | boolean | Whether the game is shown on the home page                                                  |
+| `shortDescription` | string  | One or two sentences for the catalog card                                                   |
+| `cardImage`        | object  | Card image (see [Images](#images))                                                          |
 
 ### Game details
 
@@ -61,38 +58,33 @@ Each list file has a `data` array and a `meta` object.
 ```json
 {
   "data": {
-    "slug": "moosweep",
-    "name": "Moosweep",
+    "slug": "beehive-valley",
+    "name": "Beehive Valley",
+    "category": "farm",
+    "priceCents": 299,
+    "status": "available",
     "heroImage": {},
-    "rating": 4.9,
-    "likesCount": 1520,
-    "isLikedByCurrentUser": false,
-    "fullDescription": "Moosweep — a minesweeper-like game...",
+    "fullDescription": "Beehive Valley — a cozy farm game about beekeeping...",
     "specs": {
-      "genre": "Arcade",
       "players": "Solo",
-      "duration": "5-10 min",
-      "price": "Free"
-    },
-    "topRecords": [
-      {
-        "position": 1,
-        "playerName": "HappyCow",
-        "score": 8100,
-        "achievedAt": "2026-11-13T15:00:00Z"
-      }
-    ]
+      "duration": "40-80 min"
+    }
   }
 }
 ```
 
-| Field                  | Type    | Description                                                                                        |
-| ---------------------- | ------- | -------------------------------------------------------------------------------------------------- |
-| `heroImage`            | object  | Hero image (see [Images](#images))                                                                 |
-| `isLikedByCurrentUser` | boolean | Whether the current user liked the game                                                            |
-| `fullDescription`      | string  | Full description for the details page                                                              |
-| `specs`                | object  | `genre`, `players`, `duration`, `price`                                                            |
-| `topRecords`           | array   | Top results, each with `position`, `playerName`, `score` and `achievedAt` (ISO 8601). Can be empty |
+| Field             | Type   | Description                               |
+| ----------------- | ------ | ----------------------------------------- |
+| `slug`            | string | Same as in the list item                  |
+| `name`            | string | Same as in the list item                  |
+| `category`        | string | Same as in the list item                  |
+| `priceCents`      | number | Same as in the list item                  |
+| `status`          | string | Same as in the list item                  |
+| `heroImage`       | object | Hero image (see [Images](#images))        |
+| `fullDescription` | string | Full description for the game dialog      |
+| `specs`           | object | `players` and `duration`, both plain text |
+
+`slug`, `name`, `category`, `priceCents` and `status` are repeated from the list item, so the game dialog can open from a direct link without loading the list. Keep both files in sync.
 
 ### Images
 
@@ -118,4 +110,4 @@ Each list file has a `data` array and a `meta` object.
 | Card  | 460x215   | `<slug>-card.webp`, `<slug>-card@2x.webp`, `<slug>-card.jpg` |
 | Hero  | 1920x1080 | `<slug>-hero.webp`, `<slug>-hero@2x.webp`, `<slug>-hero.jpg` |
 
-All images are stored in `public/assets/images/games/`.
+All images are stored in `public/assets/images/games/`. Paths start with `/` and are relative to the site root. When the site is deployed under a sub-path (`/berlin-guardians/`), the app has to prepend `import.meta.env.BASE_URL` to them.
