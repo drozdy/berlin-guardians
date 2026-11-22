@@ -2,6 +2,7 @@ import { getRouteHref } from '../../utils/url';
 import { createButton } from '../ui/button/button';
 import { Route } from './../../types/routes';
 import { createElement } from './../../utils/dom';
+import { createMobileMenu, type MobileMenu } from './mobile-menu';
 import './header.css';
 
 const APP_NAME = 'Berlin Guardians';
@@ -57,13 +58,13 @@ function createNavigationItem(link: NavigationLink, pageLinks: PageLinks): HTMLL
   return createElement('li', { children: [anchor] });
 }
 
-function createNavigation(pageLinks: PageLinks): HTMLElement {
+function createNavigation(pageLinks: PageLinks, className: string): HTMLElement {
   const items: HTMLLIElement[] = NAVIGATION_LINKS.map((link: NavigationLink): HTMLLIElement =>
     createNavigationItem(link, pageLinks),
   );
 
   return createElement('nav', {
-    className: 'header__nav',
+    className,
     attributes: { 'aria-label': 'Main navigation' },
     children: [createElement('ul', { className: 'header__nav-list', children: items })],
   });
@@ -80,7 +81,22 @@ function createBrand(): HTMLAnchorElement {
   });
 }
 
-function createActions(): HTMLElement {
+function createAuthButtons(): HTMLElement[] {
+  // TODO: link to the auth dialog (?auth=login) when the auth forms are ready
+  return [
+    createButton({
+      text: 'Log in',
+      variant: 'outline',
+      href: getRouteHref(Route.Home),
+    }),
+    createButton({
+      text: 'Sign Up',
+      href: getRouteHref(Route.Home),
+    }),
+  ];
+}
+
+function createActions(menuButton: HTMLButtonElement): HTMLElement {
   const cart: HTMLButtonElement | HTMLAnchorElement = createButton({
     text: 'Cart',
     size: 'icon',
@@ -90,32 +106,35 @@ function createActions(): HTMLElement {
     icon: createElement('span', { text: '🛒', attributes: { 'aria-hidden': 'true' } }),
   });
 
-  // TODO: link to the auth dialog (?auth=login) when the auth forms are ready
-  const login: HTMLButtonElement | HTMLAnchorElement = createButton({
-    text: 'Log in',
-    variant: 'outline',
-    href: getRouteHref(Route.Home),
+  return createElement('div', {
+    className: 'header__actions',
+    children: [
+      cart,
+      createElement('div', { className: 'header__auth', children: createAuthButtons() }),
+      menuButton,
+    ],
   });
-
-  const signUp: HTMLButtonElement | HTMLAnchorElement = createButton({
-    text: 'Sign Up',
-    href: getRouteHref(Route.Home),
-  });
-
-  return createElement('div', { className: 'header__actions', children: [cart, login, signUp] });
 }
 
 export function createHeader(): Header {
   const pageLinks: PageLinks = new PageLinks();
-  const actions: HTMLElement = createActions();
+  const menu: MobileMenu = createMobileMenu([
+    createNavigation(pageLinks, 'mobile-menu__nav'),
+    createElement('div', { className: 'mobile-menu__auth', children: createAuthButtons() }),
+  ]);
 
   const element: HTMLElement = createElement('header', {
     className: 'header',
     children: [
       createElement('div', {
         className: 'header__inner container',
-        children: [createBrand(), createNavigation(pageLinks), actions],
+        children: [
+          createBrand(),
+          createNavigation(pageLinks, 'header__nav'),
+          createActions(menu.button),
+        ],
       }),
+      menu.panel,
     ],
   });
 
@@ -123,6 +142,7 @@ export function createHeader(): Header {
     element,
     setCurrentPage: (page: Route | undefined): void => {
       pageLinks.markCurrent(page);
+      menu.close();
     },
   };
 }

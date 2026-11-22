@@ -16,8 +16,9 @@ export function renderCatalogPage(
 
   return {
     elements: [
-      createElement('h1', {
-        text: title || 'Catalog',
+      createElement('section', {
+        className: 'section container',
+        children: [createElement('h1', { text: title || 'Catalog' })],
       }),
     ],
   };

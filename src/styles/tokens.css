@@ -105,7 +105,9 @@
 
   /* motion */
   --duration-fast: 150ms;
+  --duration-medium: 250ms;
   --easing-standard: ease;
+  --easing-decelerate: cubic-bezier(0.2, 0, 0, 1);
 }
 
 /*
