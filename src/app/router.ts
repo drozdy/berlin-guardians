@@ -15,6 +15,7 @@ const ROUTES: ReadonlyMap<string, Route> = new Map([
   ['/', Route.Home],
   ['/home', Route.Home],
   ['/catalog', Route.Catalog],
+  ['/cart', Route.Cart],
   ['/profile', Route.Profile],
 ]);
 
