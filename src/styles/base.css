@@ -1,3 +1,6 @@
+/* base.css: reset + element defaults. Uses tokens; raw values are allowed
+   here only in the reset part (marked). */
+
 /* reset */
 *,
 *::before,
@@ -20,9 +23,10 @@ body {
   flex-direction: column;
   background-color: var(--bg);
   color: var(--on-bg);
-  font-family: var(--inter), system-ui, sans-serif;
+  font-family: var(--inter);
   font-size: var(--body-medium);
-  line-height: 1.5;
+  font-weight: var(--weight-regular);
+  line-height: var(--line-height-normal);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -63,43 +67,79 @@ button {
   cursor: pointer;
 }
 
-/* typography */
+/* typography: mobile first, one step up from tablet */
 h1,
 h2,
-h3 {
+h3,
+h4 {
   color: var(--on-bg);
-  font-weight: 700;
+  font-weight: var(--weight-bold);
+  line-height: var(--line-height-tight);
 }
 
 h1 {
-  font-size: var(--display-large);
+  font-size: var(--display-medium);
 }
 
 h2 {
-  font-size: var(--headline-large);
+  font-size: var(--headline-medium);
 }
 
 h3 {
-  font-size: var(--display-small);
+  font-size: var(--headline-small);
+}
+
+h4 {
+  font-size: var(--body-large);
+}
+
+@media (min-width: 37.5em) {
+  h1 {
+    font-size: var(--display-large);
+  }
+
+  h2 {
+    font-size: var(--headline-large);
+  }
+
+  h3 {
+    font-size: var(--headline-medium);
+  }
+
+  h4 {
+    font-size: var(--headline-small);
+  }
 }
 
 /* layout */
 .container {
   width: 100%;
-  max-width: 1680px;
+  max-width: var(--container-max);
   margin-inline: auto;
-  padding-inline: var(--size-3);
+  padding-inline: var(--space-page-gutter);
+}
+
+/* sections */
+.section {
+  margin-block-start: var(--space-section);
+}
+
+.section__title {
+  margin-block-end: var(--space-section-heading);
+  padding-inline-start: var(--size-2);
+  border-inline-start: var(--size-05) solid var(--primary);
+  font-size: var(--headline-large);
 }
 
 /* accessibility */
 :focus-visible {
-  outline: 2px solid var(--focus-ring);
-  outline-offset: 2px;
+  outline: var(--focus-ring-width) solid var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
 }
 
 .visually-hidden {
   position: absolute;
-  width: 1px;
+  width: 1px; /* reset: technical values */
   height: 1px;
   overflow: hidden;
   clip: rect(0 0 0 0);
@@ -114,22 +154,14 @@ h3 {
   *,
   *::before,
   *::after {
-    animation-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important; /* reset: technical value */
     transition-duration: 0.01ms !important;
   }
 }
 
-/* mobile */
-@media (max-width: 768px) {
-  h1 {
-    font-size: var(--display-medium);
-  }
-
-  h2 {
-    font-size: var(--headlline-medium);
-  }
-
-  .container {
-    padding-inline: var(--size-2);
+/* Windows high contrast mode: keep borders and focus visible */
+@media (forced-colors: active) {
+  :focus-visible {
+    outline-color: Highlight;
   }
 }

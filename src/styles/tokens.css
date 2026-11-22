@@ -1,101 +1,134 @@
+/*
+  Raw values live only here; components use var(--token).
+  "~" marks a color estimated from the mockup: check it in Figma.
+*/
+
 :root {
-  /* colors-base */
-  --white: #ffffff;
-  --black: #000000;
+  /* colors: page */
+  --bg: #1e2026;
+  --on-bg: #f2e4da;
+  --on-bg-low: #cac7d1;
 
-  /* colors-general */
-  --bg: #171820;
-  --on-bg: #f2e9e2;
-  --on-bg-low: #b9b3c2;
-  --bg-footer: #14151d;
-  --bg-footer-low: #20212b;
-  --bg-footer-lowest: #2b2d39;
-  --on-bg-footer: #c9c4d0;
-  --surface: #20212b;
-  --surface-low: #2b2d39;
-  --primary: #ffc928;
-  --primary-low: #ffd95c;
-  --primary-high: #e5a900;
-  --on-primary: #171820;
-  --secondary: #383a48;
-  --tertiary: #a99aaf;
-  --like: #ff6574;
-  --error: #ff7777;
-  --price-free: #75b9b8;
+  /* colors: surfaces */
+  --surface: #2a2e36;
+  --surface-low: #32343c;
+  --secondary: #3c4049; /* hover of quiet controls, inactive chips */
 
-  /* colors for borders */
-  --outline: #777384;
-  --outline-variant: #555363;
+  /* colors: footer */
+  --bg-footer: #14161c;
+  --bg-footer-low: #1e2026;
+  --on-bg-footer: #c8c5cd;
 
-  /* colors additional */
-  --avatar-random-1: #dce6f0;
-  --avatar-random-2: #b9e5d4;
-  --avatar-random-3: #c7e4f7;
-  --avatar-random-4: #f4c9e9;
-  --avatar-random-5: #ded3ef;
+  /* colors: brand */
+  --primary: #fcc246;
+  --primary-low: #ffd569; /* ~ hover */
+  --primary-high: #e0a52c; /* ~ pressed */
+  --on-primary: #1e2026; /* text on primary and on price-free */
 
-  /* additional semantic colors */
-  --success: #9bae72;
-  --warning: #ffc928;
-  --info: #75b9b8;
-  --focus-ring: #75b9b8;
-  --overlay: #0b0c12cc;
-  --surface-hover: #383a48;
-  --surface-active: #454756;
-  --on-secondary: #f2e9e2;
-  --on-tertiary: #171820;
+  /* colors: status */
+  --like: #ff6574; /* ~ */
+  --error: #ffb3b3;
+  --price-free: #7fd0db; /* ~ only for "Free" */
 
-  /* sizes */
-  --size-05: 4px;
-  --size-1: 8px;
-  --size-2: 16px;
-  --size-3: 24px;
-  --size-4: 32px;
-  --size-5: 40px;
-  --size-6: 48px;
-  --size-7: 56px;
-  --size-8: 64px;
-  --size-9: 72px;
-  --size-10: 80px;
-  --size-11: 88px;
-  --size-12: 96px;
-  --size-13: 104px;
-  --size-14: 112px;
-  --size-15: 120px;
+  /* colors: borders and overlays */
+  --outline: #8a8d98; /* fields, chips */
+  --outline-variant: #353842; /* cards; decoration only */
+  --overlay: #0f1115e6;
 
-  /* shadows */
-  --level-1: 4px 4px;
-  --level-2: 6px 6px;
-  --level-3: 8px 8px;
+  /* size scale: 4px grid */
+  --size-05: 0.25rem; /* 4px */
+  --size-1: 0.5rem; /* 8px */
+  --size-2: 1rem; /* 16px */
+  --size-3: 1.5rem; /* 24px */
+  --size-4: 2rem; /* 32px */
+  --size-6: 3rem; /* 48px */
+  --size-8: 4rem; /* 64px */
 
-  /* corner radius */
-  --corner-extra-small: 4px;
+  /* shape */
   --corner-small: 8px;
   --corner-medium: 12px;
   --corner-large: 16px;
   --corner-extra-large: 24px;
   --corner-full: 9999px;
 
-  /* button sizes */
-  --btn-large: 16px 24px;
-  --btn-medium: 10px 20px;
-  --btn-small: 8px 16px;
-  --btn-icon: 8px;
+  --shadow-color: rgb(0 0 0 / 0.35);
+  --level-1: 0 1px 2px var(--shadow-color); /* resting */
+  --level-2: 0 4px 8px var(--shadow-color); /* hover */
+  --level-3: 0 8px 20px var(--shadow-color); /* modal, dropdown */
 
-  /* font families */
-  --inter: 'Inter';
-  --roboto: 'Roboto';
+  /* typography: rem, nothing below 14px */
+  --inter: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
 
-  /*font sizes */
-  --display-large: 56px;
-  --display-medium: 36px;
-  --display-small: 24px;
+  --display-large: 4rem; /* 64px, h1 */
+  --display-medium: 2.5rem; /* 40px, h1 on phones */
 
-  --headline-large: 32px;
-  --headline-medium: 24px;
-  --btn-large-lineheight: 20px;
+  --headline-large: 2.25rem; /* 36px, h2 */
+  --headline-medium: 1.75rem; /* 28px, h3 */
+  --headline-small: 1.5rem; /* 24px, h4 */
 
-  --body-large: 18px;
-  --body-medium: 16px;
-  --body-small: 14px;
+  --body-large: 1.25rem; /* 20px, card title */
+  --body-medium: 1.125rem; /* 18px, default text */
+  --body-small: 1rem; /* 16px, descriptions */
+
+  --label-extra-large: 1.125rem; /* 18px, large button */
+  --label-large: 1rem; /* 16px, medium button, genre line */
+  --label-medium: 0.875rem; /* 14px, small button; the minimum */
+
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-bold: 700;
+
+  /* buttons: padding "vertical horizontal" */
+  --btn-large: var(--size-2) var(--size-4);
+  --btn-medium: var(--size-1) var(--size-3);
+  --btn-small: var(--size-1) var(--size-2);
+  --btn-icon: var(--size-1);
+
+  /* layout: each token replaces a hardcoded value */
+  --line-height-tight: 1.2; /* headings, labels, buttons */
+  --line-height-normal: 1.5; /* running text */
+  --border-width: 1px;
+  --focus-ring: var(--primary);
+  --focus-ring-width: 3px;
+  --focus-ring-offset: var(--size-05);
+  --opacity-disabled: 0.6; /* muted image, disabled control */
+  --target-size: 2.75rem; /* 44px, minimum tap target */
+  --container-max: 80rem; /* 1280px */
+
+  /* spacing roles: the only spacing tokens components use for layout */
+  --space-page-gutter: var(--size-2);
+  --space-section: var(--size-6);
+  --space-section-heading: var(--size-3);
+  --space-grid: var(--size-3);
+  --space-card: var(--size-3);
+  --space-card-gap: var(--size-1);
+
+  /* motion */
+  --duration-fast: 150ms;
+  --easing-standard: ease;
+}
+
+/*
+  Breakpoints cannot be variables in @media. Use exactly these two, in em:
+  tablet 37.5em (600px), desktop 60em (960px).
+*/
+@media (min-width: 37.5em) {
+  :root {
+    --space-page-gutter: var(--size-3);
+    --space-section: var(--size-8);
+  }
+}
+
+@media (min-width: 60em) {
+  :root {
+    --space-page-gutter: var(--size-4);
+  }
+}
+
+@media (prefers-contrast: more) {
+  :root {
+    --on-bg-low: #e6e3ec;
+    --outline: #b4b7c2;
+    --outline-variant: #8a8d98;
+  }
 }

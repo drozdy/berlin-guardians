@@ -15,7 +15,7 @@ export interface AppLocation {
 
 // keys allowed for query
 export enum DialogParameter {
-  Product = 'Product',
+  Product = 'product',
   Auth = 'auth',
 }
 
