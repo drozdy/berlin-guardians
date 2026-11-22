@@ -1,7 +1,10 @@
 import { getRouteHref } from '../../utils/url';
+import { createButton } from '../ui/button/button';
 import { Route } from './../../types/routes';
 import { createElement } from './../../utils/dom';
 import './header.css';
+
+const APP_NAME = 'Berlin Guardians';
 
 export interface Header {
   readonly element: HTMLElement;
@@ -66,15 +69,52 @@ function createNavigation(pageLinks: PageLinks): HTMLElement {
   });
 }
 
+function createBrand(): HTMLAnchorElement {
+  return createElement('a', {
+    className: 'header__brand',
+    attributes: { href: getRouteHref(Route.Home) },
+    children: [
+      createElement('span', { text: '♧', attributes: { 'aria-hidden': 'true' } }),
+      createElement('span', { text: APP_NAME }),
+    ],
+  });
+}
+
+function createActions(): HTMLElement {
+  const cart: HTMLButtonElement | HTMLAnchorElement = createButton({
+    text: 'Cart',
+    size: 'icon',
+    variant: 'outline',
+    href: getRouteHref(Route.Cart),
+    // TODO: replace with an SVG icon
+    icon: createElement('span', { text: '🛒', attributes: { 'aria-hidden': 'true' } }),
+  });
+
+  // TODO: link to the auth dialog (?auth=login) when the auth forms are ready
+  const login: HTMLButtonElement | HTMLAnchorElement = createButton({
+    text: 'Log in',
+    variant: 'outline',
+    href: getRouteHref(Route.Home),
+  });
+
+  const signUp: HTMLButtonElement | HTMLAnchorElement = createButton({
+    text: 'Sign Up',
+    href: getRouteHref(Route.Home),
+  });
+
+  return createElement('div', { className: 'header__actions', children: [cart, login, signUp] });
+}
+
 export function createHeader(): Header {
   const pageLinks: PageLinks = new PageLinks();
+  const actions: HTMLElement = createActions();
 
   const element: HTMLElement = createElement('header', {
     className: 'header',
     children: [
       createElement('div', {
-        className: 'header__inner',
-        children: [createNavigation(pageLinks)],
+        className: 'header__inner container',
+        children: [createBrand(), createNavigation(pageLinks), actions],
       }),
     ],
   });
