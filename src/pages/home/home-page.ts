@@ -1,8 +1,10 @@
-import { createProductCard } from '../../components/product-card/product-card';
-import { createButton } from '../../components/ui/button/button';
 import { Category, type Product } from '../../types/product';
-import { Route, type PageView } from '../../types/routes';
-import { createElement } from './../../utils/dom';
+import { type PageView } from '../../types/routes';
+import { createAboutSection } from './sections/about';
+import { createDeveloperCtaSection } from './sections/developer-cta';
+import { createFeaturedProductsSection } from './sections/featured-products';
+import { createGenresSection } from './sections/genres';
+import { createHeroSection } from './sections/hero';
 
 // TODO: remove - temporary demo
 const IMAGE = {
@@ -21,7 +23,7 @@ const IMAGE = {
 
 const PREVIEW: readonly Product[] = [
   {
-    slug: 'moosweep',
+    slug: 'moosweep-1',
     name: 'Moosweep',
     category: Category.Arcade,
     priceCents: 0,
@@ -31,7 +33,7 @@ const PREVIEW: readonly Product[] = [
     cardImage: IMAGE,
   },
   {
-    slug: 'moosweep',
+    slug: 'moosweep-2',
     name: 'Moosweep',
     category: Category.Arcade,
     priceCents: 0,
@@ -41,7 +43,7 @@ const PREVIEW: readonly Product[] = [
     cardImage: IMAGE,
   },
   {
-    slug: 'moosweep',
+    slug: 'moosweep-3',
     name: 'Moosweep',
     category: Category.Arcade,
     priceCents: 0,
@@ -63,26 +65,14 @@ const PREVIEW: readonly Product[] = [
 ];
 // TODO: remove (end) - temporary demo
 
-export function renderHomePage(options?: { title?: string }): PageView {
+export function renderHomePage(): PageView {
   return {
     elements: [
-      createElement('h1', {
-        text: options?.title || 'Home Page',
-      }),
-
-      // TODO: remove - temporary demo
-      createElement('div', {
-        attributes: {
-          style: 'display:grid;grid-template-columns:repeat(4,1fr);gap:24px;padding:24px',
-        },
-        children: PREVIEW.map((product: Product): HTMLElement =>
-          createProductCard(product, { route: Route.Home, headingLevel: 3 }),
-        ),
-      }),
-      createButton({ text: 'Play now', size: 'large' }),
-      createButton({ text: 'Play now', size: 'medium' }),
-      createButton({ text: 'Play now', size: 'small' }),
-      // TODO: remove (end) - temporary demo
+      createHeroSection(),
+      createFeaturedProductsSection(PREVIEW),
+      createGenresSection(),
+      createAboutSection(),
+      createDeveloperCtaSection(),
     ],
   };
 }
