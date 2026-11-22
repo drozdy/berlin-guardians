@@ -1,5 +1,40 @@
 # Berlin-guardians
 
+An online shop for small browser games. Built with vanilla TypeScript and Vite, without frameworks.
+
+Live demo: <https://USER.github.io/berlin-guardians/>
+
+## Getting started
+
+```bash
+npm ci
+npm run dev
+```
+
+## Project structure
+
+```
+src/
+  app/            app entry, router, dialog controller
+  assets/         static assets used in code
+  components/     reusable blocks (header, footer, modal, product card, product grid)
+    ui/           small generic elements (badge, button, picture, section header, skip link)
+  pages/          one folder per page (home, catalog, profile, 404)
+    home/sections/  blocks used only on the home page
+  styles/         design tokens and base styles
+  types/          types and enums only
+  utils/          pure helpers (DOM, URL, formatting)
+tests/            unit tests, same layout as src/
+public/
+  assets/images/  game images
+  data/           mock API responses
+docs/             mock data, projects, design
+```
+
+## Design
+
+Design tokens, components and accessibility rules are described in [docs/design.md](docs/design.md).
+
 ## Mock data
 
 The catalog uses static JSON files from `public/data/` that mimic API responses.
@@ -17,3 +52,7 @@ See [docs/mock-data.md](docs/mock-data.md) for the data structure.
 - Forest Guardians (coming soon) - a small tactical game about saving a forest from spreading fire. Start with one scout squirrel, find the towns and hire helpers.
 
 Full project descriptions: [docs/projects.md](docs/projects.md)
+
+```
+
+```
