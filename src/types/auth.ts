@@ -1,3 +1,4 @@
+import { DialogParameter } from './routes';
 export enum AuthMode {
   Login = 'login',
   Register = 'register',
@@ -5,7 +6,7 @@ export enum AuthMode {
 
 export interface AuthDialog {
   readonly element: HTMLDialogElement;
-  readonly show: (mode: AuthMode) => void;
+  readonly show: (mode: DialogParameter.Auth) => void;
   readonly hide: () => void;
 }
 
