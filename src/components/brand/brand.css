@@ -1,8 +1,10 @@
+/* components/brand/brand.css */
 .brand {
   display: inline-flex;
   align-items: center;
   gap: var(--brand-gap, calc(var(--size-1) + var(--size-05)));
   min-height: var(--target-size);
+  color: var(--on-bg);
   font-size: var(--body-small);
   font-weight: var(--weight-bold);
   letter-spacing: -0.01em;

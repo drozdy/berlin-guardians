@@ -7,6 +7,39 @@ import './footer.css';
 
 const TAGLINE = 'Play. Discover. Enjoy.';
 
+interface ExternalLink {
+  readonly label: string;
+  readonly href: string;
+}
+
+const EXTERNAL_LINKS: readonly ExternalLink[] = [
+  { label: 'GitHub', href: 'https://github.com/htochko/berlin-guardians' },
+  { label: 'RS School', href: 'https://rs.school' },
+];
+
+function createExternalLinks(): HTMLElement {
+  const items: HTMLLIElement[] = EXTERNAL_LINKS.map((link: ExternalLink): HTMLLIElement =>
+    createElement('li', {
+      children: [
+        createElement('a', {
+          className: 'footer__nav-link',
+          attributes: { href: link.href, target: '_blank', rel: 'noopener noreferrer' },
+          children: [
+            link.label,
+            createElement('span', { className: 'visually-hidden', text: ' (opens in a new tab)' }),
+          ],
+        }),
+      ],
+    }),
+  );
+
+  return createElement('ul', {
+    className: 'footer__nav-list footer__links',
+    attributes: { 'aria-label': 'Project links' },
+    children: items,
+  });
+}
+
 function createNavigation(): HTMLElement {
   const items: HTMLLIElement[] = NAVIGATION_LINKS.map((link: NavigationLink): HTMLLIElement =>
     createElement('li', {
@@ -58,12 +91,10 @@ export function createFooter(): HTMLElement {
         children: [
           createElement('div', {
             className: 'footer__identity',
-            children: [
-              createBrand(),
-              createElement('span', { className: 'footer__tagline', text: TAGLINE }),
-            ],
+            children: [createBrand(), createElement('span', { text: TAGLINE })],
           }),
           createNavigation(),
+          createExternalLinks(),
         ],
       }),
       createBottomLine(),
