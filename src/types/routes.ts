@@ -3,6 +3,7 @@ import { AuthMode } from './auth';
 export enum Route {
   Home = '/',
   Catalog = '/catalog',
+  Cart = '/cart',
   Profile = '/profile',
 }
 

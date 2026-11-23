@@ -18,9 +18,11 @@ import { renderHomePage } from '../pages/home/home-page';
 import { renderCatalogPage } from '../pages/catalog/catalog-page';
 import { renderNotFoundPage } from '../pages/404/not-found-page';
 import { createSkipLink } from '../components/ui/skip-link/skip-link';
+import { renderCartPage } from '../pages/cart/cart-page';
 
 const APP_TITLE = 'Berlin guardians';
 const APP_CATALOG_TITLE = `Catalog | ${APP_TITLE}`;
+const APP_CART_TITLE = `Cart | ${APP_TITLE}`;
 
 function initApp(): void {
   const routes: readonly RouteDefinition[] = [
@@ -34,6 +36,7 @@ function initApp(): void {
       title: APP_CATALOG_TITLE,
       render: (location: AppLocation): PageView => renderCatalogPage(APP_CATALOG_TITLE, location),
     },
+    { path: Route.Cart, title: APP_CART_TITLE, render: (): PageView => renderCartPage() },
   ];
 
   const notFound: PageDefinition = {

@@ -22,6 +22,10 @@
       box-shadow var(--duration-fast) var(--easing-standard);
   }
 
+  .product-card__link {
+    transition: color var(--duration-fast) var(--easing-standard);
+  }
+
   .product-card__arrow {
     transition:
       transform var(--duration-fast) var(--easing-standard),
@@ -36,7 +40,7 @@
   }
 
   .product-card:not(.product-card--coming-soon):hover .product-card__link {
-    text-decoration: underline;
+    color: var(--primary);
   }
 
   .product-card:not(.product-card--coming-soon):hover .product-card__arrow {
@@ -57,7 +61,8 @@
 /* media */
 .product-card__media {
   position: relative;
-  aspect-ratio: 460 / 215;
+  /* aspect-ratio: 460 / 215; */
+  aspect-ratio: 402 / 220;
   background: var(--surface-low);
 }
 
@@ -117,11 +122,6 @@
   border-radius: var(--corner-large);
 }
 
-.product-card__link:hover,
-.product-card__link:focus-visible {
-  text-decoration: underline;
-}
-
 /* the ring is drawn on the card: the link itself is clipped by overflow */
 .product-card__link:focus-visible {
   outline: none;
@@ -161,6 +161,10 @@
 
 /* keyboard focus looks like hover */
 .product-card:has(.product-card__link:focus-visible) .product-card__arrow {
+  color: var(--primary);
+}
+
+.product-card:has(.product-card__link:focus-visible) .product-card__link {
   color: var(--primary);
 }
 

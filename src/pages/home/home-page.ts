@@ -1,4 +1,4 @@
-import { Category, type Product } from '../../types/product';
+import { /* Category,*/ Category, type Product } from '../../types/product';
 import { type PageView } from '../../types/routes';
 import { createAboutSection } from './sections/about';
 import { createDeveloperCtaSection } from './sections/developer-cta';
@@ -15,10 +15,10 @@ const IMAGE = {
     {
       type: 'image/webp',
       srcset:
-        '/assets/images/games/moosweep-card.webp 1x, /assets/images/games/moosweep-card@2x.webp 2x',
+        '/assets/images/games/forest-guardians-card.webp 1x, /assets/images/games/forest-guardians-card@2x.webp 2x',
     },
   ],
-  fallback: '/assets/images/games/moosweep-card.jpg',
+  fallback: '/assets/images/games/forest-guardians-card.jpg',
 };
 
 const PREVIEW: readonly Product[] = [
@@ -26,7 +26,7 @@ const PREVIEW: readonly Product[] = [
     slug: 'moosweep-1',
     name: 'Moosweep',
     category: Category.Arcade,
-    priceCents: 0,
+    priceCents: 119,
     status: 'available',
     isFeatured: true,
     shortDescription: '',
@@ -36,7 +36,7 @@ const PREVIEW: readonly Product[] = [
     slug: 'moosweep-2',
     name: 'Moosweep',
     category: Category.Arcade,
-    priceCents: 0,
+    priceCents: 575,
     status: 'available',
     isFeatured: true,
     shortDescription: '',
@@ -57,6 +57,36 @@ const PREVIEW: readonly Product[] = [
     name: 'Forest Guardians',
     category: Category.Strategy,
     priceCents: 299,
+    status: 'available',
+    isFeatured: false,
+    shortDescription: '',
+    cardImage: IMAGE,
+  },
+  {
+    slug: 'moosweep-1',
+    name: 'Moosweep',
+    category: Category.Arcade,
+    priceCents: 200,
+    status: 'available',
+    isFeatured: true,
+    shortDescription: '',
+    cardImage: IMAGE,
+  },
+  {
+    slug: 'moosweep-2',
+    name: 'Moosweep',
+    category: Category.Arcade,
+    priceCents: 460,
+    status: 'available',
+    isFeatured: true,
+    shortDescription: '',
+    cardImage: IMAGE,
+  },
+  {
+    slug: 'forest-guardians',
+    name: 'Forest Guardians',
+    category: Category.Strategy,
+    priceCents: 299,
     status: 'coming-soon',
     isFeatured: false,
     shortDescription: '',
@@ -65,10 +95,34 @@ const PREVIEW: readonly Product[] = [
 ];
 // TODO: remove (end) - temporary demo
 
+// TODO: remove - temporary: show all games from the mock data
+// interface GamesResponse {
+//   readonly data: readonly Product[];
+// }
+
+// async function loadAllGames(): Promise<readonly Product[]> {
+//   const response: Response = await fetch(`${import.meta.env.BASE_URL}data/games-all.json`);
+//   const body: GamesResponse = (await response.json()) as GamesResponse;
+
+//   return body.data;
+// }
+// TODO: remove (end) - temporary
+
 export function renderHomePage(): PageView {
+  // TODO: remove - temporary
+  // const featured: HTMLElement = createFeaturedProductsSection([]);
+  // loadAllGames()
+  //   .then((products: readonly Product[]): void => {
+  //     featured.replaceWith(createFeaturedProductsSection(products));
+  //   })
+  //   .catch((error: unknown): void => {
+  //     console.error(error);
+  //   });
+  // TODO: remove (end) - temporary
   return {
     elements: [
       createHeroSection(),
+      // featured,
       createFeaturedProductsSection(PREVIEW),
       createGenresSection(),
       createAboutSection(),
