@@ -15,7 +15,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
-  scroll-padding-top: calc(var(--size-8) + var(--size-1));
+  scroll-padding-top: calc(var(--size-8) + var(--size-3)); /* padding for header */
+  scrollbar-gutter: stable;
 }
 
 body {
