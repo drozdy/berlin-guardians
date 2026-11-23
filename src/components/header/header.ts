@@ -5,6 +5,7 @@ import { createElement } from './../../utils/dom';
 import { createMobileMenu, type MobileMenu } from './mobile-menu';
 import './header.css';
 import { createBrand } from '../brand/brand';
+import { AuthMode } from '../../types/auth';
 
 export interface Header {
   readonly element: HTMLElement;
@@ -24,6 +25,13 @@ export const NAVIGATION_LINKS: readonly NavigationLink[] = [
 interface PageLink {
   readonly element: HTMLAnchorElement;
   readonly page: Route;
+}
+
+export interface HeaderOptions {
+  // Log In asks for the login form and Sign Up for the registration form
+  readonly onAuthClick?: (mode: AuthMode) => void;
+  // Log Out ends the session of the signed-in user
+  readonly onLogout?: () => void;
 }
 
 export class PageLinks {
@@ -69,22 +77,28 @@ function createNavigation(pageLinks: PageLinks, className: string): HTMLElement 
   });
 }
 
-function createAuthButtons(): HTMLElement[] {
+function createAuthButtons(options: HeaderOptions): HTMLElement[] {
   // TODO: link to the auth dialog (?auth=login) when the auth forms are ready
   return [
     createButton({
       text: 'Log in',
       variant: 'outline',
-      href: getRouteHref(Route.Home),
+      onClick: (): void => {
+        console.log('TEST');
+        options.onAuthClick?.(AuthMode.Login);
+      },
     }),
     createButton({
       text: 'Sign Up',
-      href: getRouteHref(Route.Home),
+      onClick: (): void => {
+        console.log('sign up');
+        options.onAuthClick?.(AuthMode.Register);
+      },
     }),
   ];
 }
 
-function createActions(menuButton: HTMLButtonElement): HTMLElement {
+function createActions(menuButton: HTMLButtonElement, options: HeaderOptions): HTMLElement {
   const cart: HTMLButtonElement | HTMLAnchorElement = createButton({
     text: 'Cart',
     size: 'icon',
@@ -98,17 +112,17 @@ function createActions(menuButton: HTMLButtonElement): HTMLElement {
     className: 'header__actions',
     children: [
       cart,
-      createElement('div', { className: 'header__auth', children: createAuthButtons() }),
+      createElement('div', { className: 'header__auth', children: createAuthButtons(options) }),
       menuButton,
     ],
   });
 }
 
-export function createHeader(): Header {
+export function createHeader(options: HeaderOptions): Header {
   const pageLinks: PageLinks = new PageLinks();
   const menu: MobileMenu = createMobileMenu([
     createNavigation(pageLinks, 'mobile-menu__nav'),
-    createElement('div', { className: 'mobile-menu__auth', children: createAuthButtons() }),
+    createElement('div', { className: 'mobile-menu__auth', children: createAuthButtons(options) }),
   ]);
 
   const element: HTMLElement = createElement('header', {
@@ -119,7 +133,7 @@ export function createHeader(): Header {
         children: [
           createBrand(),
           createNavigation(pageLinks, 'header__nav'),
-          createActions(menu.button),
+          createActions(menu.button, options),
         ],
       }),
       menu.panel,
