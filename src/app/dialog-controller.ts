@@ -1,7 +1,7 @@
 import type { ModalDialog } from '../components/modal/modal';
 import { DialogParameter, type OpenDialog } from '../types/routes';
 import type { Router } from './router';
-import { createAuthForm } from '../components/auth-fom/auth-form';
+import { createAuthForm } from '../components/auth-form/auth-form';
 import { AuthMode } from '../types/auth';
 import { loginWithEmail, registerWithEmail, formatAuthError } from '../services/auth';
 
