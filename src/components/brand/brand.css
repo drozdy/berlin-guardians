@@ -1,7 +1,7 @@
 .brand {
   display: inline-flex;
   align-items: center;
-  gap: calc(var(--size-1) + var(--size-05));
+  gap: var(--brand-gap, calc(var(--size-1) + var(--size-05)));
   min-height: var(--target-size);
   font-size: var(--body-small);
   font-weight: var(--weight-bold);
@@ -12,8 +12,8 @@
 
 .brand__logo {
   flex: none;
-  width: var(--size-6);
-  height: var(--size-6);
+  width: var(--brand-logo-size, var(--size-6));
+  height: var(--brand-logo-size, var(--size-6));
 }
 
 @media (prefers-reduced-motion: no-preference) {
