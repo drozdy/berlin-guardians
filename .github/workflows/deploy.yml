@@ -46,7 +46,7 @@ jobs:
           cp dist/index.html dist/404.html
           cp dist/index.html dist/home.html
           cp dist/index.html dist/catalog.html
-          cp dist/index.html dist/basket.html
+          cp dist/index.html dist/cart.html
           cp dist/index.html dist/profile.html
           cp dist/index.html dist/about.html
 

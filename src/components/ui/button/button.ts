@@ -13,6 +13,7 @@ export interface ButtonOptions {
   readonly href?: string;
   readonly type?: 'button' | 'submit';
   readonly icon?: HTMLElement;
+  readonly onClick?: () => void;
 }
 
 function getClassName(variant: ButtonVariant, size: ButtonSize): string {
@@ -38,9 +39,15 @@ export function createButton(options: ButtonOptions): HTMLButtonElement | HTMLAn
     return createElement('a', { className, attributes: { href: options.href }, children });
   }
 
-  return createElement('button', {
+  const button: HTMLButtonElement = createElement('button', {
     className,
     attributes: { type: options.type ?? 'button' },
     children,
   });
+
+  if (options.onClick !== undefined) {
+    button.addEventListener('click', options.onClick);
+  }
+
+  return button;
 }
