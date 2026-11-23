@@ -1,0 +1,91 @@
+import './../styles/tokens.css';
+import './../styles/base.css';
+import { createElement } from './../utils/dom';
+import { createFooter } from '../components/footer/footer';
+import { type Header, createHeader } from '../components/header/header';
+import { type ModalDialog, createDialogModal } from '../components/modal/modal';
+import {
+  Route,
+  type AppLocation,
+  type OpenDialog,
+  type PageDefinition,
+  type PageView,
+  type RouteDefinition,
+} from '../types/routes';
+import { Router, parseDialog } from './router';
+import { type DialogController, createDialogController } from './dialog-controller';
+import { renderHomePage } from '../pages/home/home-page';
+import { renderCatalogPage } from '../pages/catalog/catalog-page';
+import { renderNotFoundPage } from '../pages/404/not-found-page';
+import { createSkipLink } from '../components/ui/skip-link/skip-link';
+import { renderCartPage } from '../pages/cart/cart-page';
+import { DialogParameter } from '../types/routes';
+
+const APP_TITLE = 'Berlin guardians';
+const APP_CATALOG_TITLE = `Catalog | ${APP_TITLE}`;
+const APP_CART_TITLE = `Cart | ${APP_TITLE}`;
+
+function initApp(): void {
+  const routes: readonly RouteDefinition[] = [
+    {
+      path: Route.Home,
+      title: APP_TITLE,
+      render: (): PageView => renderHomePage(),
+    },
+    {
+      path: Route.Catalog,
+      title: APP_CATALOG_TITLE,
+      render: (location: AppLocation): PageView => renderCatalogPage(APP_CATALOG_TITLE, location),
+    },
+    { path: Route.Cart, title: APP_CART_TITLE, render: (): PageView => renderCartPage() },
+  ];
+
+  const notFound: PageDefinition = {
+    title: 'Page not found',
+    render: (): PageView => renderNotFoundPage(),
+  };
+
+  const main: HTMLElement = createElement('main', {
+    attributes: { id: 'main-content', tabindex: '-1' },
+  });
+
+  const router: Router = new Router(routes, notFound, main);
+
+  const header: Header = createHeader({
+    onAuthClick: (mode) => {
+      console.log('CLICK', mode);
+      const query: URLSearchParams = new URLSearchParams(router.location.query.toString());
+      query.set(DialogParameter.Auth, mode);
+
+      router.navigate({
+        path: router.location.path,
+        query,
+      });
+    },
+  });
+
+  const modal: ModalDialog = createDialogModal(
+    '',
+    /*false,*/
+    {
+      onClose: (): void => {
+        dialogController?.closeDialogInUrl();
+      },
+    },
+  );
+
+  const dialogController: DialogController | undefined = createDialogController(router, modal);
+
+  document.body.append(createSkipLink(main), header.element, main, createFooter(), modal.element);
+
+  router.onChange((location: AppLocation): void => {
+    header.setCurrentPage(location.route);
+
+    const dialog: OpenDialog | undefined = parseDialog(location.query);
+    dialogController?.syncWithDialog(dialog);
+  });
+
+  router.start();
+}
+
+initApp();

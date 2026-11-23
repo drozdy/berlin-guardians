@@ -1,0 +1,54 @@
+dialog.modal-dialog {
+  box-sizing: border-box;
+  background-color: var(--surface);
+  color: var(--on-bg);
+  border: 1px solid var(--on-primary);
+  border-radius: var(--corner-medium);
+  width: min(100%, var(--tablet-breakpoint, 768px));
+  max-width: 100%;
+  max-height: 90dvh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: var(--size-3);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+  position: relative;
+}
+
+dialog.modal-dialog:not([open]) {
+  display: none;
+}
+
+dialog.modal-dialog::backdrop {
+  background-color: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(6px);
+}
+
+dialog.modal-dialog .close-btn {
+  box-sizing: border-box;
+  position: absolute;
+  top: var(--size-1);
+  right: var(--size-1);
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--on-bg);
+  width: var(--size-4);
+  height: var(--size-4);
+  border-radius: var(--corner-full);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--body-large);
+  line-height: 1;
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+dialog.modal-dialog .close-btn:hover {
+  background-color: var(--primary);
+  color: var(--black);
+  border-color: var(--on-primary);
+}
