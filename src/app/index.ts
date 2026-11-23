@@ -19,6 +19,7 @@ import { renderCatalogPage } from '../pages/catalog/catalog-page';
 import { renderNotFoundPage } from '../pages/404/not-found-page';
 import { createSkipLink } from '../components/ui/skip-link/skip-link';
 import { renderCartPage } from '../pages/cart/cart-page';
+import { DialogParameter } from '../types/routes';
 
 const APP_TITLE = 'Berlin guardians';
 const APP_CATALOG_TITLE = `Catalog | ${APP_TITLE}`;
@@ -50,7 +51,18 @@ function initApp(): void {
 
   const router: Router = new Router(routes, notFound, main);
 
-  const header: Header = createHeader();
+  const header: Header = createHeader({
+    onAuthClick: (mode) => {
+      console.log('CLICK', mode);
+      const query: URLSearchParams = new URLSearchParams(router.location.query.toString());
+      query.set(DialogParameter.Auth, mode);
+
+      router.navigate({
+        path: router.location.path,
+        query,
+      });
+    },
+  });
 
   const modal: ModalDialog = createDialogModal(
     '',
