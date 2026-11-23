@@ -3,10 +3,8 @@ import { createButton } from '../ui/button/button';
 import { Route } from './../../types/routes';
 import { createElement } from './../../utils/dom';
 import { createMobileMenu, type MobileMenu } from './mobile-menu';
-import logoUrl from '../../assets/icons/logo.svg';
 import './header.css';
-
-const APP_NAME = 'Berlin Guardians';
+import { createBrand } from '../brand/brand';
 
 export interface Header {
   readonly element: HTMLElement;
@@ -68,21 +66,6 @@ function createNavigation(pageLinks: PageLinks, className: string): HTMLElement 
     className,
     attributes: { 'aria-label': 'Main navigation' },
     children: [createElement('ul', { className: 'header__nav-list', children: items })],
-  });
-}
-
-function createBrand(): HTMLAnchorElement {
-  return createElement('a', {
-    className: 'header__brand',
-    attributes: { href: getRouteHref(Route.Home) },
-    children: [
-      // decorative: the link name comes from the text
-      createElement('img', {
-        className: 'header__logo',
-        attributes: { src: logoUrl, alt: '', width: '32', height: '32' },
-      }),
-      createElement('span', { text: APP_NAME }),
-    ],
   });
 }
 
