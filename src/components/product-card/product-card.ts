@@ -9,11 +9,14 @@ import './product-card.css';
 
 export type HeadingLevel = 2 | 3 | 4;
 
+export type CardLayout = 'vertical' | 'horizontal';
+
 export interface ProductCardOptions {
   readonly route: Route;
 
   // section decides the level, and headings do not skip a level
   readonly headingLevel: HeadingLevel;
+  readonly layout?: CardLayout;
   readonly imageLoading?: 'lazy' | 'eager';
 }
 
@@ -86,22 +89,30 @@ function createTitle(
   });
 }
 
-function createMeta(product: Product): HTMLElement {
+function createMeta(product: Product, isAvailable: boolean): HTMLElement {
+  const category: HTMLElement = createElement('span', {
+    className: 'product-card__category',
+    text: product.category,
+  });
+
+  const price: HTMLElement[] = isAvailable
+    ? [
+        createElement('span', {
+          className: 'product-card__separator',
+          text: '·',
+          attributes: { 'aria-hidden': 'true' },
+        }),
+        createElement('span', {
+          className: 'product-card__price',
+          text: formatPrice(product.priceCents),
+        }),
+      ]
+    : [];
+
   return createElement('p', {
     className: 'product-card__meta',
     attributes: { id: getMetaId(product) },
-    children: [
-      createElement('span', { className: 'product-card__category', text: product.category }),
-      createElement('span', {
-        className: 'product-card__separator',
-        text: '·',
-        attributes: { 'aria-hidden': 'true' },
-      }),
-      createElement('span', {
-        className: 'product-card__price',
-        text: formatPrice(product.priceCents),
-      }),
-    ],
+    children: [category, ...price],
   });
 }
 
@@ -124,25 +135,45 @@ function createStatusBadge(): HTMLElement {
 function createFooter(product: Product, isAvailable: boolean): HTMLElement {
   return createElement('div', {
     className: 'product-card__footer',
-    children: [createMeta(product), ...(isAvailable ? [createArrow()] : [])],
+    children: [createMeta(product, isAvailable), ...(isAvailable ? [createArrow()] : [])],
   });
+}
+
+function createDescription(product: Product): HTMLElement[] {
+  if (product.shortDescription === '') {
+    return [];
+  }
+
+  return [
+    createElement('p', {
+      className: 'product-card__description',
+      text: product.shortDescription,
+    }),
+  ];
 }
 
 export function createProductCard(product: Product, options: ProductCardOptions): HTMLElement {
   const isAvailable: boolean = product.status === 'available';
   const title: HTMLElement = createTitle(product, isAvailable, options);
 
+  const layout: CardLayout = options.layout ?? 'vertical';
+  const classNames: string[] = ['product-card', `product-card--${layout}`];
+  if (!isAvailable) {
+    classNames.push('product-card--coming-soon');
+  }
+
   // reading order: title, status, genre, price; CSS puts the badge over the image
   const status: HTMLElement[] = isAvailable ? [] : [createStatusBadge()];
+  const description: HTMLElement[] = layout === 'horizontal' ? createDescription(product) : [];
 
   return createElement('article', {
-    className: isAvailable ? 'product-card' : 'product-card product-card--coming-soon',
+    className: classNames.join(' '),
     attributes: { 'aria-labelledby': getTitleId(product) },
     children: [
       createMedia(product, isAvailable, options),
       createElement('div', {
         className: 'product-card__body',
-        children: [title, ...status, createFooter(product, isAvailable)],
+        children: [title, ...status, ...description, createFooter(product, isAvailable)],
       }),
     ],
   });
