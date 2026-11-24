@@ -1,5 +1,5 @@
 // src/types/users.ts
-export interface UserProfile {
+export interface UsersRecord {
   uid: string;
   username: string;
   balance_cents: number;
@@ -15,6 +15,6 @@ export interface UserProfile {
   discord_link?: string | null;
 }
 
-export type RawUserProfile = Partial<UserProfile> & {
+export type RawUserProfile = Partial<UsersRecord> & {
   uid?: string;
 };

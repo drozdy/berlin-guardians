@@ -1,3 +1,4 @@
+// src/app/router.ts
 import {
   type AppLocation,
   type HistoryState,
