@@ -35,7 +35,7 @@ export async function sanityCheckAllUsers(db: Firestore) {
   });
 }
 
-const USER_DB_NAME = 'users';
+const USER_DB_NAME = '~2Fusers'; // smth urlencoded
 
 export async function debugUserQuery(testUid: string): Promise<void> {
   console.log('=== FIRESTORE DEBUG START ===');
