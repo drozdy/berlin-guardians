@@ -9,10 +9,9 @@ const firebaseConfig = {
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
 };
 
-
 const databaseName = import.meta.env.VITE_FIREBASE_DATABASE_NAME || 'default';
-export const FIREBASE_ENDPOINT = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/${databaseName}/documents:runQuery`;
 
+export const FIREBASE_ENDPOINT = `https://firestore.googleapis.com/v1/projects/${firebaseConfig.projectId}/databases/${databaseName}/documents:runQuery`;
 
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
@@ -44,4 +43,3 @@ export function getFirebaseDb(): Firestore {
   }
   return db;
 }
-
