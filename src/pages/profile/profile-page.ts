@@ -1,171 +1,54 @@
 // src/pages/profile/profile-page.ts
 import { onAuthStateChanged, type User } from 'firebase/auth';
-import {
-  collection,
-  getDocs,
-  query,
-  where,
-  doc,
-  getDoc,
-  getDocsFromServer,
-  type Firestore,
-  FirestoreError,
-  type DocumentData,
-} from 'firebase/firestore';
-import { QuerySnapshot } from 'firebase/firestore';
-import { getFirebaseAuth, getFirebaseDb } from '../../services/firebase';
+import { toUsersRecordMapper } from '../../api/users-adapter';
+import { getFirebaseAuth, FIREBASE_ENDPOINT } from '../../services/firebase';
 import { AuthMode } from '../../types/auth';
 import { DialogParameter, Route, type PageView } from '../../types/routes';
 import { createButton } from '../../components/ui/button/button';
 import { createElement } from '../../utils/dom';
 import { getRouteHref } from '../../utils/url';
-import type { UserProfile } from '../../types/users';
-export async function sanityCheckAllUsers(db: Firestore) {
-  console.log("🔍 Fetching ALL documents from 'users'...");
-  const snapshot = await getDocs(collection(db, 'users'));
+import { type UsersRecord } from '../../types/users';
+import { type RunQueryResponseItem } from '../../api/firestore-rest';
 
-  if (snapshot.empty) {
-    console.warn("⚠️ The 'users' collection is completely empty!");
-    return;
-  }
-
-  console.log(`✅ Found ${snapshot.size} documents:`);
-  snapshot.forEach((doc) => {
-    console.log(`📄 Doc ID: ${doc.id} -> Data:`, JSON.stringify(doc.data(), null, 2));
-  });
-}
-
-const USER_DB_NAME = '~2Fusers'; // smth urlencoded
-
-export async function debugUserQuery(testUid: string): Promise<void> {
-  console.log('=== FIRESTORE DEBUG START ===');
-
-  // 1. Validate the input parameter strictly as a string
-  if (!testUid.trim()) {
-    console.error('❌ Error: The testUid is undefined or empty!');
-    return;
-  }
-  console.log(`🔍 1. Searching 'users' collection for field 'uid' matching: "${testUid}"`);
-
-  try {
-    const db = getFirebaseDb();
-    // 2. Build the query pointing to your custom database
-    const usersCollection = collection(db, USER_DB_NAME);
-    const usersQuery = query(usersCollection, where('uid', '==', testUid));
-
-    console.log('📡 2. Sending request to database: berlin-guardians');
-    const snapshot: QuerySnapshot<unknown, DocumentData> = await getDocs(usersQuery);
-
-    // 3. Inspect results safely
-    console.log(`📊 3. Query finished! Snapshot size (documents found): ${snapshot.size}`);
-
-    if (snapshot.empty) {
-      console.warn('⚠️ Warning: No documents matched this query. Double-check that:');
-      console.warn("   a) The collection is named exactly 'users' (case-sensitive).");
-      console.warn(
-        `   b) There is a document with a field key named 'uid' containing the value: "${testUid}"`,
-      );
-    } else {
-      console.log('✅ Success! Documents found:');
-      snapshot.forEach((doc) => {
-        console.log(`   📄 Document ID: ${doc.id}`);
-        console.log('      Data:', JSON.stringify(doc.data(), null, 2));
-      });
-    }
-  } catch (error) {
-    // 4. Strictly catch and type-check errors using the SDK's FirestoreError class
-    console.error('❌ Query Failed with Error!');
-
-    if (error instanceof FirestoreError) {
-      console.error('Firestore Code:', error.code);
-      console.error('Firestore Message:', error.message);
-
-      if (error.code === 'permission-denied') {
-        console.error('👉 Solution: Your Firestore Security Rules are blocking this read request.');
-      } else if (error.code === 'failed-precondition') {
-        console.error(
-          '👉 Solution: You might be missing a composite index. Check the console link in the error details.',
-        );
-      }
-    } else if (error instanceof Error) {
-      console.error('General Error Message:', error.message);
-    } else {
-      console.error('An unexpected non-Error object was thrown.');
-    }
-  }
-
-  console.log('=== FIRESTORE DEBUG END ===');
-}
+const USER_DB_NAME = 'users'; // smth urlencoded
 
 export interface ProfilePageOptions {
   readonly onOpenAuth?: (mode: AuthMode) => void;
 }
 
-async function fetchUserStrictFromServer(uid: string, db: Firestore) {
-  const usersQuery = query(collection(db, USER_DB_NAME), where('uid', '==', uid));
+export async function fetchPublicUserByUid(
+  uid: string,
+  idToken: string,
+): Promise<Partial<UsersRecord> | null> {
+  const url = FIREBASE_ENDPOINT;
 
-  try {
-    // 2. Force the request to hit the server directly
-    const snapshot = await getDocsFromServer(usersQuery);
-
-    console.log(`📊 Query finished! Snapshot size from server: ${snapshot.size}`);
-
-    if (snapshot.empty) {
-      console.log('No documents matched on the server.');
-    } else {
-      snapshot.forEach((doc) => {
-        console.log(`✅ Success! Found Document ID: ${doc.id}`, doc);
-      });
-    }
-  } catch (error) {
-    console.error('Server query failed:', error);
-  }
-}
-
-async function fetchUserProfileByDocId(
-  db: Firestore,
-  docId = 'htochko',
-): Promise<Partial<UserProfile> | undefined> {
-  const startedAt = performance.now();
-  const ref = doc(db, USER_DB_NAME, docId);
-  const snap = await getDoc(ref);
-  const elapsedMs = Math.round(performance.now() - startedAt);
-
-  console.log(`[profile] getDoc users/${docId} in ${elapsedMs}ms, exists:`, snap.exists());
-
-  if (!snap.exists()) {
-    return undefined;
-  }
-
-  const raw = snap.data() as Partial<UserProfile>;
-  console.log('[profile] doc fields:', raw);
-
-  return {
-    uid: raw.uid ?? '',
-    username: raw.username ?? snap.id,
-    balance_cents: typeof raw.balance_cents === 'number' ? raw.balance_cents : 0,
-    currency: raw.currency ?? 'EUR',
-    bio: raw.bio ?? '',
-    logo_img: raw.logo_img ?? '',
-    linkedin_link: raw.linkedin_link ?? '',
-    github_link: raw.github_link ?? '',
-    discord_link: raw.discord_link ?? '',
-  };
-}
-
-export async function fetchProducts(db: Firestore = getFirebaseDb()): Promise<unknown[]> {
-  const startedAt = performance.now();
-  console.log('[products] fetching collection...');
-
-  const snapshot = await getDocs(collection(db, 'products'));
-  const elapsedMs = Math.round(performance.now() - startedAt);
-
-  console.log(`[products] done in ${elapsedMs}ms, count: ${snapshot.size}`);
-
-  return snapshot.docs.map((docSnap) => {
-    const data = docSnap.data();
-    console.log(docSnap.id, data);
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${idToken}`,
+    },
+    body: JSON.stringify({
+      structuredQuery: {
+        from: [{ collectionId: USER_DB_NAME }],
+        where: {
+          fieldFilter: {
+            field: { fieldPath: 'uid' },
+            op: 'EQUAL',
+            value: { stringValue: uid },
+          },
+        },
+        limit: 1,
+      },
+    }),
   });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+  }
+
+  const rows: RunQueryResponseItem[] = await response.json();
+  return toUsersRecordMapper(rows as unknown as RunQueryResponseItem[]);
 }
 
 function formatBalance(balanceCents: number | undefined, currency = 'EUR'): string {
@@ -224,7 +107,6 @@ export function renderProfilePage(options: ProfilePageOptions = {}): PageView {
   profileDetails.hidden = true;
 
   const auth = getFirebaseAuth();
-  const db = getFirebaseDb();
 
   const unsubscribe = onAuthStateChanged(auth, (user: User | null): void => {
     const currentSeq = ++authSeq;
@@ -245,15 +127,11 @@ export function renderProfilePage(options: ProfilePageOptions = {}): PageView {
     profileDetails.hidden = true;
     statusText.textContent = `Signed in as ${user.email ?? user.uid}. Loading profile...`;
 
-    fetchProducts(db);
-
     void (async (): Promise<void> => {
       try {
         console.log('USER_ID', user.uid);
-        await debugUserQuery(user.uid); // fetchUserProfileByUid(db, user.uid);
-        await sanityCheckAllUsers(db);
-        const profile = await fetchUserProfileByDocId(db);
-        await fetchUserStrictFromServer(user.uid, db);
+        const token = await user.getIdToken();
+        const profile = await fetchPublicUserByUid(user.uid, token);
         if (!profile) {
           statusText.textContent = 'P document was not found in Firestore.';
           return;
