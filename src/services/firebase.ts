@@ -43,3 +43,4 @@ export function getFirebaseDb(): Firestore {
   }
   return db;
 }
+

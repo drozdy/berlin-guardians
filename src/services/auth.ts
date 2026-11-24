@@ -53,21 +53,30 @@ export async function registerWithEmail(
 
   try {
 <<<<<<< HEAD
+<<<<<<< HEAD
     await runTransaction(db, async (transaction) => {
       const existing = await transaction.get(userRef);
 =======
     await runTransaction(db, async (tx) => {
       const existing = await tx.get(userRef);
 >>>>>>> 687cd87 (feat: add userame to auth form - submit record to db)
+=======
+    await runTransaction(db, async (transaction) => {
+      const existing = await transaction.get(userRef);
+>>>>>>> 195bc84 (feat: initial user profile to check on deploy (refactoring needed))
       if (existing.exists()) {
         throw new UsernameTakenError(normalizedUsername);
       }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
       transaction.set(userRef, {
 =======
       tx.set(userRef, {
 >>>>>>> 687cd87 (feat: add userame to auth form - submit record to db)
+=======
+      transaction.set(userRef, {
+>>>>>>> 195bc84 (feat: initial user profile to check on deploy (refactoring needed))
         uid: credential.user.uid,
         username,
         balance_cents: INITIAL_BALANCE_CENTS,
