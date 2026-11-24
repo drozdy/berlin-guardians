@@ -1,5 +1,6 @@
 import { type Product } from '../../types/product';
 import { type PageView } from '../../types/routes';
+import { withBase } from '../../utils/url';
 import { createAboutSection } from './sections/about';
 import { createDeveloperCtaSection } from './sections/developer-cta';
 import { createFeaturedProductsSection } from './sections/featured-products';
@@ -12,7 +13,7 @@ interface GamesResponse {
 }
 
 async function loadAllGames(): Promise<readonly Product[]> {
-  const response: Response = await fetch(`${import.meta.env.BASE_URL}data/games-all.json`);
+  const response: Response = await fetch(withBase('/data/games-all.json'));
   const body: GamesResponse = (await response.json()) as GamesResponse;
 
   return body.data;
