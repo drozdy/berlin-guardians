@@ -41,7 +41,7 @@ export function getProductHref(slug: string, route: Route): string {
 
 // '/assets/a.webp' -> '/berlin-guardians/assets/a.webp'
 export function withBase(path: string): string {
-  return path.startsWith('/') ? `${BASE_PATH}${path.slice(1)}` : path;
+  return path.startsWith('/') ? `${trimTrailingSlashes(BASE_PATH)}${path}` : path;
 }
 
 // srcset вида 'a.webp 1x, b.webp 2x'
