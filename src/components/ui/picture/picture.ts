@@ -1,4 +1,5 @@
 import { createElement } from '../../../utils/dom';
+import { srcsetWithBase, withBase } from '../../../utils/url';
 
 export interface PictureSource {
   readonly type: string;
@@ -25,14 +26,14 @@ export interface PictureOptions {
 export function createPicture(image: PictureData, options: PictureOptions): HTMLPictureElement {
   const sources: HTMLSourceElement[] = image.sources.map((source): HTMLSourceElement =>
     createElement('source', {
-      attributes: { type: source.type, srcset: source.srcset },
+      attributes: { type: source.type, srcset: srcsetWithBase(source.srcset) },
     }),
   );
 
   const img: HTMLImageElement = createElement('img', {
     className: options.imageClassName,
     attributes: {
-      src: image.fallback,
+      src: withBase(image.fallback),
       alt: image.alt,
       width: String(image.width),
       height: String(image.height),

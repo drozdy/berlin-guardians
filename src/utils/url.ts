@@ -38,3 +38,16 @@ export function getProductHref(slug: string, route: Route): string {
 
   return toBrowserUrl(route, query, BASE_PATH);
 }
+
+// '/assets/a.webp' -> '/berlin-guardians/assets/a.webp'
+export function withBase(path: string): string {
+  return path.startsWith('/') ? `${BASE_PATH}${path.slice(1)}` : path;
+}
+
+// srcset вида 'a.webp 1x, b.webp 2x'
+export function srcsetWithBase(srcset: string): string {
+  return srcset
+    .split(',')
+    .map((part: string): string => withBase(part.trim()))
+    .join(', ');
+}
