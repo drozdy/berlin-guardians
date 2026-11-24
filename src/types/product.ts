@@ -34,3 +34,15 @@ export interface Product {
   readonly shortDescription: string;
   readonly cardImage: ProductImage;
 }
+
+export interface ProductSpecs {
+  readonly players: string;
+  readonly duration: string;
+}
+
+export interface ProductExtra {
+  readonly fullDescription: string;
+  readonly specs: ProductSpecs;
+}
+
+export interface ProductDetails extends Product, ProductExtra {}
