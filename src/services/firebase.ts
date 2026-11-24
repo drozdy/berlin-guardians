@@ -9,7 +9,7 @@ const firebaseConfig = {
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
 };
 
-const databaseName = import.meta.env.VITE_FIREBASE_PROJECT_ID || 'default';
+const databaseName = import.meta.env.VITE_FIREBASE_DATABASE_NAME || 'default';
 
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
