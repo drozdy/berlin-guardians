@@ -3,4 +3,5 @@ export type CategoryRecord = {
   tag: string;
   description: string;
   icon_path: string;
+  publised: boolean;
 };

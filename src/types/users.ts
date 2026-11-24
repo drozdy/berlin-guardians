@@ -9,7 +9,7 @@ export interface UsersRecord {
   bio?: string | null;
   is_admin: boolean;
   is_contributor: boolean;
-  regestered_from: string | null;
+  registered_from: string | null;
   linkedin_link?: string | null;
   github_link?: string | null;
   discord_link?: string | null;
