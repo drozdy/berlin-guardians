@@ -199,7 +199,7 @@
     aspect-ratio: auto;
   }
 
-  .product-card--horizontal .product-card__body > .product-card__badge {
-    right: calc(100% - var(--card-media-share) + var(--size-1));
+  .product-card--horizontal .product-card__title {
+    margin-top: auto;
   }
 }
