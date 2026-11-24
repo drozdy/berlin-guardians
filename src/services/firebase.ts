@@ -1,5 +1,7 @@
+// src/services/firebase.ts
 import { initializeApp, type FirebaseApp } from 'firebase/app';
 import { getAuth, type Auth } from 'firebase/auth';
+import { getFirestore, type Firestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
@@ -7,15 +9,29 @@ const firebaseConfig = {
   projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
 };
 
+const databaseName = import.meta.env.VITE_FIREBASE_PROJECT_ID || 'default';
+
 let app: FirebaseApp | undefined;
 let auth: Auth | undefined;
+let db: Firestore | undefined;
 
-export function getFirebaseAuth(): Auth {
+function getFirebaseApp(): FirebaseApp {
   if (!app) {
     app = initializeApp(firebaseConfig);
   }
+  return app;
+}
+
+export function getFirebaseAuth(): Auth {
   if (!auth) {
-    auth = getAuth(app);
+    auth = getAuth(getFirebaseApp());
   }
   return auth;
+}
+
+export function getFirebaseDb(): Firestore {
+  if (!db) {
+    db = getFirestore(getFirebaseApp(), databaseName);
+  }
+  return db;
 }
