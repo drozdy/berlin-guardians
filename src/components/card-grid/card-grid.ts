@@ -1,4 +1,5 @@
 import { createElement } from '../../utils/dom';
+import './card-grid.css';
 
 export interface CardGridItem {
   readonly element: HTMLElement;

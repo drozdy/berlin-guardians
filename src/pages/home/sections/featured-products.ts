@@ -7,9 +7,15 @@ import { createElement } from '../../../utils/dom';
 import { getRouteHref } from '../../../utils/url';
 
 function toGridItem(product: Product): CardGridItem {
+  const isComingSoon: boolean = product.status === 'coming-soon';
+
   return {
-    element: createProductCard(product, { route: Route.Home, headingLevel: 3 }),
-    isWide: product.status === 'coming-soon',
+    element: createProductCard(product, {
+      route: Route.Home,
+      headingLevel: 3,
+      layout: isComingSoon ? 'horizontal' : 'vertical',
+    }),
+    isWide: isComingSoon,
   };
 }
 

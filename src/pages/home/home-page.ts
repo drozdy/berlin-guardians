@@ -53,8 +53,8 @@ const PREVIEW: readonly Product[] = [
     cardImage: IMAGE,
   },
   {
-    slug: 'forest-guardians',
-    name: 'Forest Guardians',
+    slug: 'forest-guardians1',
+    name: 'Moosweep',
     category: Category.Strategy,
     priceCents: 299,
     status: 'available',
@@ -63,7 +63,7 @@ const PREVIEW: readonly Product[] = [
     cardImage: IMAGE,
   },
   {
-    slug: 'moosweep-1',
+    slug: 'moosweep-3',
     name: 'Moosweep',
     category: Category.Arcade,
     priceCents: 200,
@@ -73,7 +73,7 @@ const PREVIEW: readonly Product[] = [
     cardImage: IMAGE,
   },
   {
-    slug: 'moosweep-2',
+    slug: 'moosweep-4',
     name: 'Moosweep',
     category: Category.Arcade,
     priceCents: 460,
@@ -83,13 +83,13 @@ const PREVIEW: readonly Product[] = [
     cardImage: IMAGE,
   },
   {
-    slug: 'forest-guardians',
+    slug: 'forest-guardians2',
     name: 'Forest Guardians',
     category: Category.Strategy,
     priceCents: 299,
     status: 'coming-soon',
     isFeatured: false,
-    shortDescription: '',
+    shortDescription: 'A small tactical game about saving a forest from spreading fire.',
     cardImage: IMAGE,
   },
 ];
