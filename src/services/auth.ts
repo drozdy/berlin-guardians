@@ -52,13 +52,13 @@ export async function registerWithEmail(
   const userRef = doc(db, 'users', normalizedUsername);
 
   try {
-    await runTransaction(db, async (tx) => {
-      const existing = await tx.get(userRef);
+    await runTransaction(db, async (transaction) => {
+      const existing = await transaction.get(userRef);
       if (existing.exists()) {
         throw new UsernameTakenError(normalizedUsername);
       }
 
-      tx.set(userRef, {
+      transaction.set(userRef, {
         uid: credential.user.uid,
         username,
         balance_cents: INITIAL_BALANCE_CENTS,
