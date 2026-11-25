@@ -5,6 +5,15 @@ import { createAuthForm } from '../components/auth-form/auth-form';
 import { AuthMode } from '../types/auth';
 import { loginWithEmail, registerWithEmail, formatAuthError } from '../services/auth';
 
+import {
+  createProductDetails,
+  getDialogState,
+} from '../components/product-details/product-details';
+import type { ProductDetails } from '../types/product';
+import { fetchProductDetails } from '../api/products-api';
+import { createElement } from '../utils/dom';
+import { ProductNotFoundError } from '../api/errors';
+
 export interface DialogController {
   readonly syncWithDialog: (dialog: OpenDialog | undefined) => void;
   readonly closeDialogInUrl: () => void;
@@ -29,6 +38,53 @@ function getDialogTitle(dialog: OpenDialog): string {
 }
 
 export function createDialogController(router: Router, modal: ModalDialog): DialogController {
+  let cancelProductLoad: (() => void) | undefined;
+
+  const cancelPendingLoad = (): void => {
+    cancelProductLoad?.();
+    cancelProductLoad = undefined;
+  };
+
+  const showMessage = (text: string): void => {
+    modal.content.replaceChildren(createElement('p', { text, attributes: { role: 'status' } }));
+  };
+
+  // returns a cancel function
+  const loadProduct = (slug: string): (() => void) => {
+    const controller: AbortController = new AbortController();
+
+    modal.setTitle('Loading…');
+    showMessage('Loading…');
+
+    fetchProductDetails(slug, controller.signal)
+      .then((product: ProductDetails): void => {
+        if (controller.signal.aborted) {
+          return;
+        }
+        modal.setTitle(product.name);
+        // TODO: replace false with the real cart check
+        modal.content.replaceChildren(
+          createProductDetails(product, getDialogState(product, false)),
+        );
+      })
+      .catch((error: unknown): void => {
+        if (controller.signal.aborted) {
+          return;
+        }
+        console.error(error);
+        const message: string =
+          error instanceof ProductNotFoundError
+            ? 'Game not found'
+            : 'Failed to load the game. Please try again later.';
+        modal.setTitle(message);
+        showMessage(message);
+      });
+
+    return (): void => {
+      controller.abort();
+    };
+  };
+
   const closeDialogInUrl = (): void => {
     const currentQuery: URLSearchParams = router.location.query;
     if (!hasDialogQueryParams(currentQuery)) {
@@ -45,10 +101,16 @@ export function createDialogController(router: Router, modal: ModalDialog): Dial
   };
 
   const syncWithDialog = (dialog: OpenDialog | undefined): void => {
+    cancelPendingLoad();
     if (dialog === undefined) {
       modal.hide();
       return;
     }
+
+    modal.element.classList.toggle(
+      'modal-dialog--product',
+      dialog.parameter === DialogParameter.Product,
+    );
 
     modal.setTitle(getDialogTitle(dialog));
     modal.content.replaceChildren();
@@ -91,6 +153,7 @@ export function createDialogController(router: Router, modal: ModalDialog): Dial
       modal.content.append(authForm.element);
     } else if (dialog.parameter === DialogParameter.Product) {
       // render Product card here (dialog.slug)
+      cancelProductLoad = loadProduct(dialog.slug);
     }
 
     modal.show();

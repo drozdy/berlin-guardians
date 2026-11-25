@@ -1,10 +1,11 @@
 import type { Product } from '../../types/product';
 import type { Route } from '../../types/routes';
 import { createElement } from '../../utils/dom';
-import { formatPrice } from '../../utils/format';
 import { getProductHref } from '../../utils/url';
 import { createBadge } from '../ui/badge/badge';
+import { createCategoryBadge } from '../ui/badge/category-badge';
 import { createPicture } from '../ui/picture/picture';
+import { createPrice } from '../ui/price/price';
 import './product-card.css';
 
 export type HeadingLevel = 2 | 3 | 4;
@@ -35,24 +36,7 @@ function getMetaId(product: Product): string {
   return `product-${product.slug}-meta`;
 }
 
-// price is in the meta text, badge is only for eyes
-function createPriceBadge(product: Product): HTMLElement {
-  const isFree: boolean = product.priceCents === 0;
-  const badge: HTMLElement = createBadge(
-    formatPrice(product.priceCents),
-    isFree ? 'price-free' : 'price-paid',
-  );
-  badge.classList.add('product-card__badge');
-  badge.setAttribute('aria-hidden', 'true');
-
-  return badge;
-}
-
-function createMedia(
-  product: Product,
-  isAvailable: boolean,
-  options: ProductCardOptions,
-): HTMLElement {
+function createMedia(product: Product, options: ProductCardOptions): HTMLElement {
   return createElement('div', {
     className: 'product-card__media',
     children: [
@@ -61,7 +45,6 @@ function createMedia(
         imageClassName: 'product-card__image',
         loading: options.imageLoading,
       }),
-      ...(isAvailable ? [createPriceBadge(product)] : []),
     ],
   });
 }
@@ -90,29 +73,13 @@ function createTitle(
 }
 
 function createMeta(product: Product, isAvailable: boolean): HTMLElement {
-  const category: HTMLElement = createElement('span', {
-    className: 'product-card__category',
-    text: product.category,
-  });
-
-  const price: HTMLElement[] = isAvailable
-    ? [
-        createElement('span', {
-          className: 'product-card__separator',
-          text: '·',
-          attributes: { 'aria-hidden': 'true' },
-        }),
-        createElement('span', {
-          className: 'product-card__price',
-          text: formatPrice(product.priceCents),
-        }),
-      ]
-    : [];
-
   return createElement('p', {
     className: 'product-card__meta',
     attributes: { id: getMetaId(product) },
-    children: [category, ...price],
+    children: [
+      createCategoryBadge(product.category),
+      ...(isAvailable ? [createPrice(product.priceCents)] : []),
+    ],
   });
 }
 
@@ -170,7 +137,7 @@ export function createProductCard(product: Product, options: ProductCardOptions)
     className: classNames.join(' '),
     attributes: { 'aria-labelledby': getTitleId(product) },
     children: [
-      createMedia(product, isAvailable, options),
+      createMedia(product, options),
       createElement('div', {
         className: 'product-card__body',
         children: [title, ...status, ...description, createFooter(product, isAvailable)],

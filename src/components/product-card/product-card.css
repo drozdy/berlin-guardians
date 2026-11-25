@@ -152,14 +152,22 @@
 
 .product-card__meta {
   display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: space-between;
   gap: var(--space-card-gap);
   font-size: var(--label-large);
   line-height: var(--line-height-normal);
   color: var(--on-bg-low);
 }
 
-.product-card__category {
-  text-transform: capitalize;
+.product-card__meta .price:not(.price--free) {
+  color: var(--on-bg);
+}
+
+.product-card__meta .badge {
+  padding: var(--size-05) var(--size-1);
+  font-size: var(--label-medium);
 }
 
 .product-card__arrow {

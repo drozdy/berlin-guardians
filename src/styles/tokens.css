@@ -29,6 +29,15 @@
   --like: #ff6574; /* ~ */
   --error: #ffb3b3;
   --price-free: #7fd0db; /* ~ only for "Free" */
+  --success: #6fd391; /* ~ check icons */
+  --category-puzzle-fg: #b8a9ff;
+  --category-arcade-fg: #ff9fd0;
+  --category-strategy-fg: #8cc2ff;
+  --category-farm-fg: #6fd391;
+  --category-adventure-fg: #ffb36b;
+  --category-simulation-fg: #7fd0db;
+  --category-music-fg: #ff8f9a;
+  --category-casual-fg: #e0d48a;
 
   /* colors: borders and overlays */
   --outline: #8a8d98; /* fields, chips */

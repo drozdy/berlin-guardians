@@ -1,14 +1,13 @@
 import { type CategoryRecord } from '../types/categories';
 import { type RunQueryResponseItem, toBoolean, toNullableString } from './firestore-rest';
 
-export function toCategoriesRecordMapper(rows: RunQueryResponseItem[]): CategoryRecord | null {
-  const doc = rows.find((item) => item.document)?.document;
-  if (!doc) {
+export function toCategoriesRecordMapper(item: RunQueryResponseItem): CategoryRecord | null {
+  if (!item.document) {
     return null;
   }
 
-  const fields = doc.fields ?? {};
-
+  const fields = item.document.fields ?? {};
+  console.log(fields);
   const result: CategoryRecord = {
     tag: fields.uid?.stringValue ?? 'all',
     description: fields.description?.stringValue ?? '',
