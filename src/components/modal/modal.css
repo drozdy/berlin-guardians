@@ -33,8 +33,9 @@ dialog.modal-dialog .modal-content {
   flex: 0 1 auto;
   min-height: 0;
   max-height: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
+  margin: calc(var(--size-1) * -1);
+  padding: var(--size-1);
+  overflow: hidden auto;
   overscroll-behavior: contain;
 }
 

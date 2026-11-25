@@ -1,6 +1,9 @@
 import { createElement } from '../../utils/dom';
 import { AuthMode } from '../../types/auth';
-import './auth-form.css';
+
+// ! No own CSS:
+// ! styles come from base.css (form, field, labels, inputs)
+// ! and button.css (.btn)
 
 export interface AuthCredentials {
   readonly email: string;
@@ -25,14 +28,13 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
   const isRegister = options.mode === 'register';
 
   const description = createElement('p', {
-    className: 'auth-form__description',
+    className: 'form__description',
     text: isRegister
       ? 'Create an account to save your progress and items.'
       : 'Sign in with your email and password.',
   });
 
   const usernameInput = createElement('input', {
-    className: 'auth-form__input',
     attributes: {
       id: 'users-username',
       name: 'username',
@@ -44,40 +46,38 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
   });
 
   const usernameLabel = createElement('label', {
-    className: 'auth-form__label',
     text: 'Username',
     attributes: { for: 'users-username' },
   });
 
   const usernameField = createElement('div', {
-    className: `auth-form__field${isRegister ? '' : ' hidden'}`,
+    className: 'field',
     children: [usernameLabel, usernameInput],
   });
+  usernameField.hidden = !isRegister;
 
   const fullnameInput = createElement('input', {
-    className: 'auth-form__input',
     attributes: {
       id: 'users-fullname',
       name: 'fullname',
       type: 'text',
-      autocomplete: 'fullname',
+      autocomplete: 'name',
       placeholder: 'Name Surname',
     },
   });
 
   const fullnameLabel = createElement('label', {
-    className: 'auth-form__label',
     text: 'Full Name',
     attributes: { for: 'users-fullname' },
   });
 
   const fullnameField = createElement('div', {
-    className: `auth-form__field${isRegister ? '' : ' hidden'}`,
+    className: 'field',
     children: [fullnameLabel, fullnameInput],
   });
+  fullnameField.hidden = !isRegister;
 
   const emailInput = createElement('input', {
-    className: 'auth-form__input',
     attributes: {
       id: 'auth-email',
       name: 'email',
@@ -89,18 +89,16 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
   });
 
   const emailLabel = createElement('label', {
-    className: 'auth-form__label',
     text: 'Email',
     attributes: { for: 'auth-email' },
   });
 
   const emailField = createElement('div', {
-    className: 'auth-form__field',
+    className: 'field',
     children: [emailLabel, emailInput],
   });
 
   const passwordInput = createElement('input', {
-    className: 'auth-form__input',
     attributes: {
       id: 'auth-password',
       name: 'password',
@@ -113,41 +111,40 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
   });
 
   const passwordLabel = createElement('label', {
-    className: 'auth-form__label',
     text: 'Password',
     attributes: { for: 'auth-password' },
   });
 
   // todo add confirm password
   const passwordField = createElement('div', {
-    className: 'auth-form__field',
+    className: 'field',
     children: [passwordLabel, passwordInput],
   });
 
   const errorText = createElement('p', {
-    className: 'auth-form__error',
+    className: 'form__error',
     attributes: { role: 'alert', 'aria-live': 'polite' },
   });
 
   const submitButton = createElement('button', {
-    className: 'auth-form__submit',
+    className: 'btn btn--primary btn--large',
     text: isRegister ? 'Create account' : 'Sign in',
     attributes: { type: 'submit' },
   });
 
   const switchModeButton = createElement('button', {
-    className: 'auth-form__switch',
+    className: 'link-button',
     text: isRegister ? 'Already have an account? Sign in' : 'Need an account? Register',
     attributes: { type: 'button' },
   });
 
   const actionsRow = createElement('div', {
-    className: 'auth-form__actions',
+    className: 'form__actions',
     children: [submitButton, switchModeButton],
   });
 
   const form = createElement('form', {
-    className: 'auth-form',
+    className: 'form',
     attributes: { novalidate: 'true' },
     children: [
       description,
