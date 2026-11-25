@@ -6,6 +6,7 @@ import { type RunQueryResponseItem } from '../../../api/firestore-rest';
 import { toCategoriesRecordMapper } from '../../../api/categories-adapter';
 import { BASE_PATH, toBrowserUrl } from '../../../utils/url';
 import { Route } from '../../../types/routes';
+import './genres.css';
 
 export async function fetchPublishedCategories(): Promise<(CategoryRecord | null)[]> {
   const url = FIREBASE_ENDPOINT_QUERY;
@@ -57,9 +58,20 @@ export function createGenresSection(): HTMLElement {
       }
 
       const categoriesTiles = categories.map((item: Partial<CategoryRecord> | null) => {
+        const description: HTMLSpanElement = createElement('span', {
+          className: 'genre-tile__label',
+          text: item?.description ? item?.description : 'All',
+        });
+        const icon: HTMLImageElement = createElement('img', {
+          className: 'genre-tile__icon',
+          attributes: {
+            'aria-hidden': 'true',
+            src: `${BASE_PATH}assets/images/genres/${item?.icon_path}`, // add fallback or onError handler
+          },
+        });
         const categoryLink: HTMLAnchorElement = createElement('a', {
-          className: `icon_${item?.tag}`,
-          text: item?.description ? item?.description : 'all',
+          className: `icon_${item?.tag} genre-tile`,
+          children: [icon, description],
           attributes: {
             href: toBrowserUrl(
               Route.Catalog,
