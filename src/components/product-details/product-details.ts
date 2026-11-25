@@ -1,6 +1,7 @@
 import { type ProductDetails } from '../../types/product';
 import { Route } from '../../types/routes';
 import { createElement } from '../../utils/dom';
+import { formatDuration } from '../../utils/format';
 import { getRouteHref } from '../../utils/url';
 import { createBadge } from '../ui/badge/badge';
 import { createCategoryBadge } from '../ui/badge/category-badge';
@@ -96,7 +97,10 @@ export function createProductDetails(
             children: [
               createCategoryBadge(product.category),
               createMetaBadge('user', product.specs.players),
-              createMetaBadge('clock', product.specs.duration),
+              createMetaBadge(
+                'clock',
+                formatDuration(product.specs.durationFrom, product.specs.durationTo),
+              ),
             ],
           }),
 

@@ -1,13 +1,13 @@
-export enum Category {
-  Puzzle = 'puzzle',
-  Arcade = 'arcade',
-  Strategy = 'strategy',
-  Farm = 'farm',
-  Adventure = 'adventure',
-  Simulation = 'simulation',
-  Music = 'music',
-  Casual = 'casual',
-}
+// export enum Category {
+//   Puzzle = 'puzzle',
+//   Arcade = 'arcade',
+//   Strategy = 'strategy',
+//   Farm = 'farm',
+//   Adventure = 'adventure',
+//   Simulation = 'simulation',
+//   Music = 'music',
+//   Casual = 'casual',
+// }
 
 export type ProductStatus = 'available' | 'coming-soon';
 
@@ -27,7 +27,7 @@ export interface ProductImage {
 export interface Product {
   readonly slug: string;
   readonly name: string;
-  readonly category: Category;
+  readonly category: string;
   readonly priceCents: number; // 0 = Free
   readonly status: ProductStatus;
   readonly isFeatured: boolean; // shown on the home page
@@ -37,7 +37,8 @@ export interface Product {
 
 export interface ProductSpecs {
   readonly players: string;
-  readonly duration: string;
+  readonly durationFrom: number;
+  readonly durationTo: number;
 }
 
 export interface ProductExtra {

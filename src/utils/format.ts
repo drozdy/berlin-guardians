@@ -12,3 +12,7 @@ export function formatPrice(priceCents: number): string {
 export function formatCoins(priceCents: number): string {
   return priceCents.toLocaleString('en-US');
 }
+
+export function formatDuration(from: number, to: number): string {
+  return from === to ? `${from} min` : `${from}–${to} min`;
+}
