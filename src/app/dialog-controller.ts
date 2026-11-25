@@ -10,8 +10,9 @@ import {
   getDialogState,
 } from '../components/product-details/product-details';
 import type { ProductDetails } from '../types/product';
-import { fetchProductDetails } from '../api/products-api-local';
+import { fetchProductDetails } from '../api/products-api';
 import { createElement } from '../utils/dom';
+import { ProductNotFoundError } from '../api/errors';
 
 export interface DialogController {
   readonly syncWithDialog: (dialog: OpenDialog | undefined) => void;
@@ -71,8 +72,12 @@ export function createDialogController(router: Router, modal: ModalDialog): Dial
           return;
         }
         console.error(error);
-        modal.setTitle('Game not found');
-        showMessage('Game not found');
+        const message: string =
+          error instanceof ProductNotFoundError
+            ? 'Game not found'
+            : 'Failed to load the game. Please try again later.';
+        modal.setTitle(message);
+        showMessage(message);
       });
 
     return (): void => {
