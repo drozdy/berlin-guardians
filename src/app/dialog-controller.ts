@@ -113,6 +113,8 @@ export function createDialogController(router: Router, modal: ModalDialog): Dial
       dialog.parameter === DialogParameter.Product,
     );
 
+    modal.element.classList.toggle('modal-dialog--auth', dialog.parameter === DialogParameter.Auth);
+
     modal.setTitle(getDialogTitle(dialog));
     modal.content.replaceChildren();
 

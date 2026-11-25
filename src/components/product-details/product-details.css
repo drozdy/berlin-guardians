@@ -1,9 +1,14 @@
+/* ---------- card ---------- */
 .product-details {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
+  min-height: 0;
 }
 
 .product-details__picture {
+  flex: none;
+  max-height: 40dvh;
   aspect-ratio: var(--card-media-ratio);
   background: var(--surface-low);
 }
@@ -14,11 +19,19 @@
   object-fit: cover;
 }
 
+/* ---------- body ---------- */
 .product-details__body {
   display: flex;
+  flex: 1 1 auto;
   flex-direction: column;
   gap: var(--size-2);
+  min-height: 0;
   padding: var(--size-2);
+  padding-bottom: max(var(--size-2), env(safe-area-inset-bottom));
+}
+
+.product-details__body > :not(.product-details__description) {
+  flex-shrink: 0;
 }
 
 .product-details__badges {
@@ -48,57 +61,58 @@
 }
 
 .product-details__description {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   font-size: var(--body-small);
   color: var(--on-bg-low);
-
-  overflow-y: auto;
-  min-height: 0;
-  overscroll-behavior: contain;
 }
 
 .product-details__price {
   display: flex;
   align-items: center;
   gap: var(--size-1);
-  margin-top: var(--size-1);
   font-size: var(--headline-small);
   font-weight: var(--weight-bold);
 }
 
 .product-details__body .btn {
   width: 100%;
-  margin-top: var(--size-1);
   padding-inline: var(--size-2);
   white-space: normal;
   text-align: center;
 }
 
-@media not all and (min-width: 37.5em) {
-  .product-details {
-    flex: 1 1 auto;
-    min-height: 0;
-    overflow: hidden;
+/* ---------- tablet and up, or a very short screen ---------- */
+@media (min-width: 37.5em), (max-height: 30em) {
+  .product-details,
+  .product-details__body,
+  .product-details__description {
+    flex: none;
+    overflow: visible;
   }
+}
 
+@media (min-width: 37.5em) {
   .product-details__picture {
-    flex-shrink: 0;
-    max-height: 40dvh;
+    max-height: none;
   }
 
   .product-details__body {
-    flex: 1;
-    min-height: 0;
-    overflow: hidden;
-    padding-bottom: max(var(--size-2), env(safe-area-inset-bottom));
+    padding: var(--space-card);
   }
 
-  .product-details__body > :not(.product-details__description) {
-    flex-shrink: 0;
+  .product-details__title {
+    font-size: var(--headline-medium);
   }
 
-  .product-details__description {
-    flex: 1;
-    min-height: 0;
-    overflow-y: auto;
+  .product-details__meta .badge {
+    padding: var(--size-05) var(--size-2);
+    font-size: var(--label-large);
+  }
+
+  .product-details__body .btn {
+    padding-inline: var(--size-4);
   }
 }
