@@ -158,8 +158,9 @@
   color: var(--on-bg-low);
 }
 
-.product-card__category {
-  text-transform: capitalize;
+.product-card__meta .badge {
+  padding: var(--size-05) var(--size-1);
+  font-size: var(--label-medium);
 }
 
 .product-card__arrow {

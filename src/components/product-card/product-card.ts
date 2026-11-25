@@ -4,6 +4,7 @@ import { createElement } from '../../utils/dom';
 import { formatPrice } from '../../utils/format';
 import { getProductHref } from '../../utils/url';
 import { createBadge } from '../ui/badge/badge';
+import { createCategoryBadge } from '../ui/badge/category-badge';
 import { createPicture } from '../ui/picture/picture';
 import './product-card.css';
 
@@ -90,29 +91,21 @@ function createTitle(
 }
 
 function createMeta(product: Product, isAvailable: boolean): HTMLElement {
-  const category: HTMLElement = createElement('span', {
-    className: 'product-card__category',
-    text: product.category,
-  });
+  const children: HTMLElement[] = [createCategoryBadge(product.category)];
 
-  const price: HTMLElement[] = isAvailable
-    ? [
-        createElement('span', {
-          className: 'product-card__separator',
-          text: '·',
-          attributes: { 'aria-hidden': 'true' },
-        }),
-        createElement('span', {
-          className: 'product-card__price',
-          text: formatPrice(product.priceCents),
-        }),
-      ]
-    : [];
+  if (isAvailable) {
+    children.push(
+      createElement('span', {
+        className: 'visually-hidden',
+        text: `, ${formatPrice(product.priceCents)}`,
+      }),
+    );
+  }
 
   return createElement('p', {
     className: 'product-card__meta',
     attributes: { id: getMetaId(product) },
-    children: [category, ...price],
+    children,
   });
 }
 

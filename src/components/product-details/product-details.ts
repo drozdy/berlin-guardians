@@ -1,27 +1,16 @@
-import { Category, type ProductDetails } from '../../types/product';
+import { type ProductDetails } from '../../types/product';
 import { Route } from '../../types/routes';
 import { createElement } from '../../utils/dom';
 import { formatCoins } from '../../utils/format';
 import { getRouteHref } from '../../utils/url';
 import { createBadge } from '../ui/badge/badge';
+import { createCategoryBadge } from '../ui/badge/category-badge';
 import { createButton } from '../ui/button/button';
 import { createIcon, type IconName } from '../ui/icon/icon';
 import { createPicture } from '../ui/picture/picture';
 import './product-details.css';
 
 export type ProductDialogState = 'default' | 'in-cart' | 'coming-soon';
-
-const CATEGORY_ICONS: Readonly<Record<Category, IconName>> = {
-  [Category.Puzzle]: 'puzzle',
-  [Category.Arcade]: 'gamepad',
-  [Category.Strategy]: 'flag',
-  [Category.Farm]: 'leaf',
-  [Category.Adventure]: 'compass',
-  [Category.Simulation]: 'sliders',
-  [Category.Music]: 'music',
-  [Category.Casual]: 'coffee',
-};
-
 export function getDialogState(product: ProductDetails, isInCart: boolean): ProductDialogState {
   if (product.status === 'coming-soon') {
     return 'coming-soon';
@@ -61,18 +50,6 @@ function createAction(state: ProductDialogState): HTMLElement {
 
 function createMetaBadge(icon: IconName, text: string): HTMLSpanElement {
   return createBadge(text, 'meta', createIcon(icon));
-}
-
-function createCategoryBadge(product: ProductDetails): HTMLSpanElement {
-  const category: HTMLSpanElement = createBadge(
-    product.category,
-    'category',
-    createIcon(CATEGORY_ICONS[product.category]),
-  );
-  category.classList.add('product-details__category');
-  category.dataset.category = product.category; // picks the colors in badge.css
-
-  return category;
 }
 
 // only in the 'in-cart' state
@@ -133,7 +110,7 @@ export function createProductDetails(
           createElement('p', {
             className: 'product-details__meta',
             children: [
-              createCategoryBadge(product),
+              createCategoryBadge(product.category),
               createMetaBadge('user', product.specs.players),
               createMetaBadge('clock', product.specs.duration),
             ],
