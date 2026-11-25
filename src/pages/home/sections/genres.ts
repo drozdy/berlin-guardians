@@ -4,7 +4,7 @@ import { FIREBASE_ENDPOINT_QUERY } from '../../../services/firebase';
 import { type CategoryRecord, CATEGORY_DB_NAME } from '../../../types/categories';
 import { type RunQueryResponseItem } from '../../../api/firestore-rest';
 import { toCategoriesRecordMapper } from '../../../api/categories-adapter';
-import { BASE_PATH } from '../../../utils/url';
+import { BASE_PATH, toBrowserUrl } from '../../../utils/url';
 import { Route } from '../../../types/routes';
 
 export async function fetchPublishedCategories(): Promise<(CategoryRecord | null)[]> {
@@ -61,7 +61,11 @@ export function createGenresSection(): HTMLElement {
           className: `icon_${item?.tag}`,
           text: item?.description ? item?.description : 'all',
           attributes: {
-            src: `${BASE_PATH}${Route.Catalog}?category=${item?.tag}`,
+            href: toBrowserUrl(
+              Route.Catalog,
+              new URLSearchParams(`category=${item?.tag}`),
+              BASE_PATH,
+            ),
           },
         });
         return createElement('li', {
