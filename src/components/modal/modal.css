@@ -1,18 +1,23 @@
 dialog.modal-dialog {
+  --dialog-gap: var(--size-2);
+
   margin: auto;
   box-sizing: border-box;
+  width: min(100% - 2 * var(--dialog-gap), var(--dialog-width));
+  max-width: none;
+  max-height: calc(100dvh - 2 * var(--dialog-gap));
+  padding: var(--size-3);
+  overflow: hidden;
   background-color: var(--surface);
   color: var(--on-bg);
-  border: 1px solid var(--on-primary);
-  border-radius: var(--corner-medium);
-  width: min(100%, var(--tablet-breakpoint, 768px));
-  max-width: 100%;
-  max-height: 90dvh;
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: var(--size-3);
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-  overscroll-behavior: contain;
+  border: var(--border-width) solid var(--outline-variant);
+  border-radius: var(--corner-large);
+  box-shadow: var(--level-3);
+}
+
+dialog.modal-dialog[open] {
+  display: flex;
+  flex-direction: column;
 }
 
 dialog.modal-dialog:not([open]) {
@@ -20,8 +25,29 @@ dialog.modal-dialog:not([open]) {
 }
 
 dialog.modal-dialog::backdrop {
-  background-color: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(6px);
+  background-color: var(--overlay);
+  backdrop-filter: blur(var(--size-05));
+}
+
+dialog.modal-dialog .modal-content {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden auto; /* no sideways scroll, only vertical */
+  overscroll-behavior: contain;
+}
+
+dialog.modal-dialog--product {
+  width: min(100% - 2 * var(--dialog-gap), var(--dialog-width-product));
+  padding: 0;
+}
+
+dialog.modal-dialog--product > h2 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 dialog.modal-dialog .close-btn {
@@ -54,24 +80,10 @@ dialog.modal-dialog .close-btn:hover {
   border-color: var(--on-primary);
 }
 
-dialog.modal-dialog--product {
-  width: min(100%, 29rem);
-  padding: 0;
-}
-
 dialog.modal-dialog--product .close-btn {
   background-color: rgb(0 0 0 / 0.55);
   border-color: rgb(255 255 255 / 0.25);
   z-index: 1;
-}
-
-dialog.modal-dialog--product > h2 {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  clip: rect(0 0 0 0);
-  white-space: nowrap;
 }
 
 /* "Loading…" and "Game not found" */

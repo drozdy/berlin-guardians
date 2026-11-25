@@ -105,6 +105,8 @@
   --container-max: 80rem; /* 1280px */
   --card-media-ratio: 402 / 220; /* card image, one value for every card */
   --card-media-share: 40%; /* image width in a horizontal card */
+  --dialog-width: 48rem; /* 768px, default dialog (auth) */
+  --dialog-width-product: 29rem; /* 464px: close to the card image width, so it is not upscaled */
 
   /* spacing roles: the only spacing tokens components use for layout */
   --space-page-gutter: var(--size-2);
