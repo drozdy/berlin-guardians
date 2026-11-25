@@ -4,11 +4,10 @@ import { FIREBASE_ENDPOINT_QUERY } from '../../../services/firebase';
 import { type CategoryRecord, CATEGORY_DB_NAME } from '../../../types/categories';
 import { type RunQueryResponseItem } from '../../../api/firestore-rest';
 import { toCategoriesRecordMapper } from '../../../api/categories-adapter';
-//import { BASE_PATH } from '../../../utils/url';
+import { BASE_PATH } from '../../../utils/url';
+import { Route } from '../../../types/routes';
 
-// const iconAssetsBasePath = BASE_PATH;
-
-export async function fetchPublishedCategories(): Promise<Partial<CategoryRecord> | null> {
+export async function fetchPublishedCategories(): Promise<(CategoryRecord | null)[]> {
   const url = FIREBASE_ENDPOINT_QUERY;
 
   const response = await fetch(url, {
@@ -36,13 +35,17 @@ export async function fetchPublishedCategories(): Promise<Partial<CategoryRecord
   }
 
   const rows: RunQueryResponseItem[] = await response.json();
-  return toCategoriesRecordMapper(rows as unknown as RunQueryResponseItem[]);
+  return rows.map((row) => toCategoriesRecordMapper(row as unknown as RunQueryResponseItem));
 }
 
 export function createGenresSection(): HTMLElement {
   const statusText: HTMLParagraphElement = createElement('p', {
     className: 'profile-page__status',
     text: 'Checking genres available...',
+  });
+
+  let content: HTMLElement = createElement('div', {
+    className: 'home-page__genres',
   });
 
   void (async (): Promise<void> => {
@@ -52,10 +55,31 @@ export function createGenresSection(): HTMLElement {
         statusText.textContent = 'Any genre is present in app';
         return;
       }
-      console.log(categories);
+
+      const categoriesTiles = categories.map((item: Partial<CategoryRecord> | null) => {
+        const categoryLink: HTMLAnchorElement = createElement('a', {
+          className: `icon_${item?.tag}`,
+          text: item?.description ? item?.description : 'all',
+          attributes: {
+            src: `${BASE_PATH}${Route.Catalog}?category=${item?.tag}`,
+          },
+        });
+        return createElement('li', {
+          className: 'profile-page__genres-list__item',
+          children: [categoryLink],
+        });
+      });
+
+      content.replaceChildren(
+        createElement('ul', {
+          className: 'profile-page__genres-list',
+          children: categoriesTiles,
+        }),
+      );
     } catch (error: unknown) {
       console.error('Failed to load profile from Firestore:', error);
       statusText.textContent = 'Failed to load profile data.';
+      content = statusText;
     }
   })();
 
@@ -67,7 +91,7 @@ export function createGenresSection(): HTMLElement {
         id: 'genres-title',
         title: 'Browse by Genre',
       }),
-      statusText,
+      content,
     ],
   });
 }
