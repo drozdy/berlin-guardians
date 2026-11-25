@@ -37,6 +37,10 @@ body.is-scroll-locked {
   overflow: hidden;
 }
 
+body:has(dialog.modal-dialog[open]) {
+  overflow: hidden;
+}
+
 main {
   flex: 1;
 }

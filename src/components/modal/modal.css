@@ -1,4 +1,5 @@
 dialog.modal-dialog {
+  margin: auto;
   box-sizing: border-box;
   background-color: var(--surface);
   color: var(--on-bg);
@@ -11,7 +12,7 @@ dialog.modal-dialog {
   overflow-y: auto;
   padding: var(--size-3);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-  position: relative;
+  overscroll-behavior: contain;
 }
 
 dialog.modal-dialog:not([open]) {
@@ -49,6 +50,31 @@ dialog.modal-dialog .close-btn {
 
 dialog.modal-dialog .close-btn:hover {
   background-color: var(--primary);
-  color: var(--black);
+  color: var(--on-primary);
   border-color: var(--on-primary);
+}
+
+dialog.modal-dialog--product {
+  width: min(100%, 29rem);
+  padding: 0;
+}
+
+dialog.modal-dialog--product .close-btn {
+  background-color: rgb(0 0 0 / 0.55);
+  border-color: rgb(255 255 255 / 0.25);
+  z-index: 1;
+}
+
+dialog.modal-dialog--product > h2 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+/* "Loading…" and "Game not found" */
+dialog.modal-dialog--product > .modal-content > p[role='status'] {
+  padding: var(--size-6) var(--size-3);
 }
