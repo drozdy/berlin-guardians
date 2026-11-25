@@ -1,5 +1,10 @@
 import { firebaseConfig, FIREBASE_ENDPOINT } from '../services/firebase';
 
+export interface RunQueryDocument {
+  name: string;
+  fields?: Record<string, FirestoreFieldValue>;
+}
+
 export interface FirestoreRestDocument {
   readonly name: string;
   readonly fields?: Record<string, FirestoreRestValue>;
@@ -13,6 +18,7 @@ interface FirestoreFieldValue {
   booleanValue?: boolean;
   timestampValue?: string;
   nullValue?: null;
+  referenceValue?: string;
 }
 
 export interface RunQueryResponseItem {
@@ -45,6 +51,20 @@ export function toNullableString(field?: FirestoreFieldValue): string | null {
     return null;
   }
   return field.stringValue ?? field.timestampValue ?? null;
+}
+
+export function extractSlugFromName(name: string): string {
+  const parts = name.split('/');
+  return parts.at(-1) ?? 'deafault';
+}
+
+export function extractSlugFromRef(field: FirestoreFieldValue): string {
+  const ref = field?.referenceValue;
+  if (!ref) {
+    return 'deafault';
+  }
+  const parts = ref.split('/');
+  return parts.at(-1) ?? 'deafault';
 }
 
 export type FirestoreRestValue =
@@ -126,4 +146,16 @@ export async function restCreateDocument(
   }
 
   return response.json();
+}
+
+export interface RunQueryFilter {
+  fieldFilter?: {
+    field: { fieldPath: string };
+    op: 'EQUAL';
+    value: { integerValue?: string; referenceValue?: string };
+  };
+  compositeFilter?: {
+    op: 'AND';
+    filters: NonNullable<RunQueryFilter['fieldFilter']>[];
+  };
 }
