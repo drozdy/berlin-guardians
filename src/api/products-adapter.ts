@@ -1,7 +1,14 @@
 import { FIREBASE_ENDPOINT_QUERY } from '../services/firebase';
 import { type productsRecord } from '../types/products';
-import { type RunQueryFilter, type RunQueryDocument, toNumber } from './firestore-rest';
+import {
+  type RunQueryFilter,
+  type RunQueryDocument,
+  toNumber,
+  extractSlugFromRef,
+  extractSlugFromName,
+} from './firestore-rest';
 import { firebaseConfig } from '../services/firebase';
+import type { Product, ProductStatus, ProductImage, ImageSource } from '../types/product';
 
 const PRODUCT_TABLE_DATABASE = 'product';
 const DEFAULT_CATEGORY_SLUG = 'product';
@@ -16,8 +23,42 @@ export function toProductRecordMapper(item: RunQueryDocument): Partial<productsR
     priceCents: toNumber(fields.balance_cents, 0),
     status: fields.status?.stringValue ?? 'coming-soon',
     featured: fields.is_admin?.booleanValue ?? false,
-    //is_contributor: fields.is_contributor?.booleanValue ?? false,
     url: fields.url?.stringValue ?? undefined,
+  };
+
+  return result;
+}
+
+export function extractCardImageFromSlug(slug: string) {
+  const path = `/assets/images/games/${slug}`;
+  const sources = [
+    {
+      type: 'image/webp',
+      srcset: `${path}-card.webp 1x, ${path}-card@2x.webp 2x`,
+    },
+  ] as ImageSource[];
+  return {
+    alt: slug,
+    width: 460,
+    height: 215,
+    sources,
+    fallback: `${path}-card.jpg`,
+  } as ProductImage;
+}
+
+export function toProductMapper(item: RunQueryDocument): Product {
+  const fields = item.fields ?? {};
+  const slug = extractSlugFromName(item.name);
+  const result: Product = {
+    slug: fields.slug?.stringValue ?? extractSlugFromName(item.name),
+    name: fields.name?.stringValue ?? '',
+    shortDescription: fields.shortDescription?.stringValue ?? '',
+    priceCents: toNumber(fields.balance_cents, 0),
+    status: (fields.status?.stringValue ?? 'coming-soon') as unknown as ProductStatus,
+    isFeatured: fields.is_admin?.booleanValue ?? false,
+    category: extractSlugFromRef(fields?.genre) ?? '',
+    cardImage: extractCardImageFromSlug(slug),
+    //url: fields.url?.stringValue ?? undefined,
   };
 
   return result;

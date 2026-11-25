@@ -1,12 +1,13 @@
-import type { AppLocation, PageView } from '../../types/routes';
+import { Route, type AppLocation, type PageView } from '../../types/routes';
 import { createElement } from './../../utils/dom';
 import type { Product } from '../../types/product';
 import {
   queryCatalogProducts,
-  toProductRecordMapper,
+  toProductMapper,
   type CatalogQueryOptions,
 } from '../../api/products-adapter';
 import type { RunQueryDocument } from '../../api/firestore-rest';
+import { createProductCard } from '../../components/product-card/product-card';
 
 export interface CatalogPageOptions {
   readonly onProductOpen?: (product: Product) => void;
@@ -22,7 +23,10 @@ export function renderCatalogPage(
     className: 'profile-page__status',
     text: 'Checking products published...',
   });
-
+  const container: HTMLDivElement = createElement('div', {
+    className: `catalog-page__filterd-grid`,
+    children: [statusText],
+  });
   // let address: URLSearchParams = location.query;
   void (async (): Promise<void> => {
     try {
@@ -35,10 +39,19 @@ export function renderCatalogPage(
       }
 
       const productTiles = products.map((product) =>
-        toProductRecordMapper(product as RunQueryDocument),
+        createProductCard(toProductMapper(product as RunQueryDocument), {
+          route: _location?.route ?? Route.Home,
+          headingLevel: 2,
+        }),
       );
-      // todo apply productTiles to cards and render grid
-      console.log(productTiles);
+      // todo refactor
+      container.replaceChildren(
+        createElement('ul', {
+          className: 'catalog-page__genres-list',
+          children: productTiles,
+        }),
+      );
+      statusText.textContent = '';
     } catch (error: unknown) {
       console.error(error);
       //
@@ -51,6 +64,7 @@ export function renderCatalogPage(
         className: 'section container',
         children: [createElement('h1', { text: title || 'Catalog' }), statusText],
       }),
+      container,
     ],
   };
 }
