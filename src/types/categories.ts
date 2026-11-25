@@ -1,6 +1,7 @@
 // src/types/categories.ts
 export type CategoryRecord = {
   tag: string;
-  description: string;
-  icon_path: string;
+  description: string | null;
+  icon_path: string | null;
+  published: boolean;
 };

@@ -1,3 +1,4 @@
+// src/components/header.ts
 import { getRouteHref } from '../../utils/url';
 import { createButton } from '../ui/button/button';
 import { Route } from './../../types/routes';
@@ -7,9 +8,15 @@ import './header.css';
 import { createBrand } from '../brand/brand';
 import { AuthMode } from '../../types/auth';
 
+export interface HeaderAuthState {
+  readonly isAuthenticated: boolean;
+  readonly username?: string;
+}
+
 export interface Header {
   readonly element: HTMLElement;
   readonly setCurrentPage: (page: Route | undefined) => void;
+  readonly setAuthState: (state: HeaderAuthState) => void;
 }
 
 export interface NavigationLink {
@@ -77,28 +84,89 @@ function createNavigation(pageLinks: PageLinks, className: string): HTMLElement 
   });
 }
 
-function createAuthButtons(options: HeaderOptions): HTMLElement[] {
-  // TODO: link to the auth dialog (?auth=login) when the auth forms are ready
+function createGuestControls(options: HeaderOptions): HTMLElement[] {
   return [
     createButton({
       text: 'Log in',
       variant: 'outline',
       onClick: (): void => {
-        console.log('TEST');
         options.onAuthClick?.(AuthMode.Login);
       },
     }),
     createButton({
       text: 'Sign Up',
       onClick: (): void => {
-        console.log('sign up');
         options.onAuthClick?.(AuthMode.Register);
       },
     }),
   ];
 }
 
-function createActions(menuButton: HTMLButtonElement, options: HeaderOptions): HTMLElement {
+function createAuthenticatedControls(
+  options: HeaderOptions,
+  pageLinks: PageLinks,
+): {
+  readonly nodes: HTMLElement[];
+  readonly setUsername: (username: string | undefined) => void;
+} {
+  const profileLink: HTMLButtonElement | HTMLAnchorElement = createButton({
+    text: 'Profile',
+    variant: 'outline',
+    href: getRouteHref(Route.Profile),
+  });
+
+  if (profileLink instanceof HTMLAnchorElement) {
+    pageLinks.add(profileLink, Route.Profile);
+  }
+
+  const logoutButton: HTMLButtonElement | HTMLAnchorElement = createButton({
+    text: 'Log out',
+    variant: 'outline',
+    onClick: (): void => {
+      options.onLogout?.();
+    },
+  });
+
+  return {
+    nodes: [profileLink, logoutButton],
+    setUsername: (username: string | undefined): void => {
+      const trimmed: string = username?.trim() ?? '';
+      profileLink.textContent = trimmed !== '' ? trimmed : 'Profile';
+    },
+  };
+}
+
+interface AuthSlotController {
+  readonly container: HTMLElement;
+  readonly update: (state: HeaderAuthState) => void;
+}
+
+function createAuthSlot(
+  className: string,
+  options: HeaderOptions,
+  pageLinks: PageLinks,
+): AuthSlotController {
+  const guestControls: HTMLElement[] = createGuestControls(options);
+  const authControls = createAuthenticatedControls(options, pageLinks);
+  const container: HTMLDivElement = createElement('div', {
+    className,
+    children: guestControls,
+  });
+
+  return {
+    container,
+    update: (state: HeaderAuthState): void => {
+      if (state.isAuthenticated) {
+        authControls.setUsername(state.username);
+        container.replaceChildren(...authControls.nodes);
+      } else {
+        container.replaceChildren(...guestControls);
+      }
+    },
+  };
+}
+
+function createActions(menuButton: HTMLButtonElement, authSlot: AuthSlotController): HTMLElement {
   const cart: HTMLButtonElement | HTMLAnchorElement = createButton({
     text: 'Cart',
     size: 'icon',
@@ -110,19 +178,24 @@ function createActions(menuButton: HTMLButtonElement, options: HeaderOptions): H
 
   return createElement('div', {
     className: 'header__actions',
-    children: [
-      cart,
-      createElement('div', { className: 'header__auth', children: createAuthButtons(options) }),
-      menuButton,
-    ],
+    children: [cart, authSlot.container, menuButton],
   });
 }
 
 export function createHeader(options: HeaderOptions): Header {
   const pageLinks: PageLinks = new PageLinks();
+  let currentPage: Route | undefined;
+
+  const headerAuthSlot: AuthSlotController = createAuthSlot('header__auth', options, pageLinks);
+  const mobileAuthSlot: AuthSlotController = createAuthSlot(
+    'mobile-menu__auth',
+    options,
+    pageLinks,
+  );
+
   const menu: MobileMenu = createMobileMenu([
     createNavigation(pageLinks, 'mobile-menu__nav'),
-    createElement('div', { className: 'mobile-menu__auth', children: createAuthButtons(options) }),
+    mobileAuthSlot.container,
   ]);
 
   const element: HTMLElement = createElement('header', {
@@ -133,7 +206,7 @@ export function createHeader(options: HeaderOptions): Header {
         children: [
           createBrand(),
           createNavigation(pageLinks, 'header__nav'),
-          createActions(menu.button, options),
+          createActions(menu.button, headerAuthSlot),
         ],
       }),
       menu.panel,
@@ -143,8 +216,14 @@ export function createHeader(options: HeaderOptions): Header {
   return {
     element,
     setCurrentPage: (page: Route | undefined): void => {
-      pageLinks.markCurrent(page);
+      currentPage = page;
+      pageLinks.markCurrent(currentPage);
       menu.close();
+    },
+    setAuthState: (state: HeaderAuthState): void => {
+      headerAuthSlot.update(state);
+      mobileAuthSlot.update(state);
+      pageLinks.markCurrent(currentPage);
     },
   };
 }

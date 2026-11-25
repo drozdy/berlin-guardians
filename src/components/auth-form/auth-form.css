@@ -108,3 +108,7 @@
 .auth-form__switch:hover {
   color: var(--on-primary);
 }
+
+.hidden {
+  display: none;
+}
