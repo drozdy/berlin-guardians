@@ -81,10 +81,14 @@ export function createDialogController(router: Router, modal: ModalDialog): Dial
         onSubmit: async (credentials): Promise<void> => {
           authForm.setError('');
           authForm.setSubmitting(true);
-
           try {
             if (mode === AuthMode.Register) {
-              await registerWithEmail(credentials.email, credentials.password);
+              await registerWithEmail(
+                credentials.email,
+                credentials.password,
+                credentials.username,
+                credentials.full_name,
+              );
             } else {
               await loginWithEmail(credentials.email, credentials.password);
             }

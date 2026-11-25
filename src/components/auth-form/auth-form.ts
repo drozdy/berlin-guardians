@@ -5,6 +5,8 @@ import './auth-form.css';
 export interface AuthCredentials {
   readonly email: string;
   readonly password: string;
+  username: string | undefined;
+  full_name: string | undefined;
 }
 
 export interface AuthFormOptions {
@@ -27,6 +29,51 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
     text: isRegister
       ? 'Create an account to save your progress and items.'
       : 'Sign in with your email and password.',
+  });
+
+  const usernameInput = createElement('input', {
+    className: 'auth-form__input',
+    attributes: {
+      id: 'users-username',
+      name: 'username',
+      type: 'text',
+      autocomplete: 'username',
+      required: 'true',
+      placeholder: 'username',
+    },
+  });
+
+  const usernameLabel = createElement('label', {
+    className: 'auth-form__label',
+    text: 'Username',
+    attributes: { for: 'users-username' },
+  });
+
+  const usernameField = createElement('div', {
+    className: `auth-form__field${isRegister ? '' : ' hidden'}`,
+    children: [usernameLabel, usernameInput],
+  });
+
+  const fullnameInput = createElement('input', {
+    className: 'auth-form__input',
+    attributes: {
+      id: 'users-fullname',
+      name: 'fullname',
+      type: 'text',
+      autocomplete: 'fullname',
+      placeholder: 'Name Surname',
+    },
+  });
+
+  const fullnameLabel = createElement('label', {
+    className: 'auth-form__label',
+    text: 'Full Name',
+    attributes: { for: 'users-fullname' },
+  });
+
+  const fullnameField = createElement('div', {
+    className: `auth-form__field${isRegister ? '' : ' hidden'}`,
+    children: [fullnameLabel, fullnameInput],
   });
 
   const emailInput = createElement('input', {
@@ -71,6 +118,7 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
     attributes: { for: 'auth-password' },
   });
 
+  // todo add confirm password
   const passwordField = createElement('div', {
     className: 'auth-form__field',
     children: [passwordLabel, passwordInput],
@@ -101,7 +149,15 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
   const form = createElement('form', {
     className: 'auth-form',
     attributes: { novalidate: 'true' },
-    children: [description, emailField, passwordField, errorText, actionsRow],
+    children: [
+      description,
+      usernameField,
+      fullnameField,
+      emailField,
+      passwordField,
+      errorText,
+      actionsRow,
+    ],
   });
 
   const setError = (message: string): void => {
@@ -125,6 +181,8 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
 
     const email = emailInput.value.trim();
     const password = passwordInput.value;
+    const username = usernameInput?.value;
+    const full_name = fullnameInput?.value;
 
     if (!email || !password) {
       setError('Please enter both email and password.');
@@ -133,7 +191,7 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
 
     setSubmitting(true);
     try {
-      await options.onSubmit({ email, password }, options.mode);
+      await options.onSubmit({ email, password, username, full_name }, options.mode);
     } catch (error: unknown) {
       const message =
         error instanceof Error ? error.message : 'Authentication failed. Please try again.';
