@@ -12,7 +12,7 @@ export interface ButtonOptions {
   // with href the result is a link styled as a button
   readonly href?: string;
   readonly type?: 'button' | 'submit';
-  readonly icon?: HTMLElement;
+  readonly icon?: Element;
   readonly disabled?: boolean;
   readonly onClick?: () => void;
 }
@@ -21,8 +21,8 @@ function getClassName(variant: ButtonVariant, size: ButtonSize): string {
   return `btn btn--${variant} btn--${size}`;
 }
 
-function createContent(options: ButtonOptions, size: ButtonSize): (HTMLElement | string)[] {
-  const label: HTMLElement | string =
+function createContent(options: ButtonOptions, size: ButtonSize): (Element | string)[] {
+  const label: Element | string =
     size === 'icon'
       ? createElement('span', { className: 'visually-hidden', text: options.text })
       : options.text;
@@ -34,7 +34,7 @@ export function createButton(options: ButtonOptions): HTMLButtonElement | HTMLAn
   const variant: ButtonVariant = options.variant ?? 'primary';
   const size: ButtonSize = options.size ?? 'medium';
   const className: string = getClassName(variant, size);
-  const children: (HTMLElement | string)[] = createContent(options, size);
+  const children: (Element | string)[] = createContent(options, size);
 
   if (options.href !== undefined) {
     return createElement('a', { className, attributes: { href: options.href }, children });

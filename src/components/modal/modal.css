@@ -12,7 +12,7 @@ dialog.modal-dialog {
   overflow-y: auto;
   padding: var(--size-3);
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-  position: relative;
+  overscroll-behavior: contain;
 }
 
 dialog.modal-dialog:not([open]) {

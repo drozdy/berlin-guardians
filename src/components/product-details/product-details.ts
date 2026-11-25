@@ -1,14 +1,26 @@
-import type { ProductDetails } from '../../types/product';
+import { Category, type ProductDetails } from '../../types/product';
 import { Route } from '../../types/routes';
 import { createElement } from '../../utils/dom';
 import { formatPrice } from '../../utils/format';
 import { getRouteHref } from '../../utils/url';
 import { createBadge } from '../ui/badge/badge';
 import { createButton } from '../ui/button/button';
+import { createIcon, type IconName } from '../ui/icon/icon';
 import { createPicture } from '../ui/picture/picture';
 import './product-details.css';
 
 export type ProductDialogState = 'default' | 'in-cart' | 'coming-soon';
+
+const CATEGORY_ICONS: Readonly<Record<Category, IconName>> = {
+  [Category.Puzzle]: 'puzzle',
+  [Category.Arcade]: 'gamepad',
+  [Category.Strategy]: 'flag',
+  [Category.Farm]: 'leaf',
+  [Category.Adventure]: 'compass',
+  [Category.Simulation]: 'sliders',
+  [Category.Music]: 'music',
+  [Category.Casual]: 'coffee',
+};
 
 export function getDialogState(product: ProductDetails, isInCart: boolean): ProductDialogState {
   if (product.status === 'coming-soon') {
@@ -21,7 +33,11 @@ export function getDialogState(product: ProductDetails, isInCart: boolean): Prod
 function createAction(state: ProductDialogState): HTMLElement {
   switch (state) {
     case 'default':
-      return createButton({ text: 'Add session to cart', size: 'large' });
+      return createButton({
+        text: 'Add session to cart',
+        size: 'large',
+        icon: createIcon('cart'),
+      });
     case 'in-cart':
       return createButton({
         text: 'Go to cart →',
@@ -43,19 +59,42 @@ function createAction(state: ProductDialogState): HTMLElement {
   }
 }
 
+function createMetaItem(icon: IconName, text: string): HTMLElement {
+  return createElement('span', {
+    className: 'product-details__meta-item',
+    children: [createIcon(icon), text],
+  });
+}
+
+function createCategoryBadge(product: ProductDetails): HTMLSpanElement {
+  const category: HTMLSpanElement = createBadge(
+    product.category,
+    'category',
+    createIcon(CATEGORY_ICONS[product.category]),
+  );
+  category.classList.add('product-details__category');
+  category.dataset.category = product.category; // picks the colors in badge.css
+
+  return category;
+}
+
+// only in the 'in-cart' state
+function createStatusRow(state: ProductDialogState): HTMLElement[] {
+  if (state !== 'in-cart') {
+    return [];
+  }
+
+  return [
+    createElement('div', {
+      className: 'product-details__badges',
+      children: [createBadge('Added to cart', 'status', createIcon('check'))],
+    }),
+  ];
+}
 export function createProductDetails(
   product: ProductDetails,
   state: ProductDialogState,
 ): HTMLElement {
-  const category: HTMLSpanElement = createBadge(product.category);
-  category.classList.add('product-details__category');
-
-  const badges: HTMLElement[] = [category];
-
-  if (state === 'in-cart') {
-    badges.push(createBadge('Added to cart'));
-  }
-
   return createElement('article', {
     className: 'product-details',
     children: [
@@ -68,11 +107,9 @@ export function createProductDetails(
       createElement('div', {
         className: 'product-details__body',
         children: [
-          createElement('div', {
-            className: 'product-details__badges',
-            children: badges,
-          }),
+          ...createStatusRow(state),
 
+          // the dialog already has a hidden <h2> with the name for screen readers
           createElement('p', {
             className: 'product-details__title',
             text: product.name,
@@ -81,7 +118,16 @@ export function createProductDetails(
 
           createElement('p', {
             className: 'product-details__meta',
-            text: `${product.specs.players} · ${product.specs.duration}`,
+            children: [
+              createCategoryBadge(product),
+              createMetaItem('user', product.specs.players),
+              createElement('span', {
+                className: 'product-details__separator',
+                text: '•',
+                attributes: { 'aria-hidden': 'true' },
+              }),
+              createMetaItem('clock', product.specs.duration),
+            ],
           }),
 
           createElement('p', {

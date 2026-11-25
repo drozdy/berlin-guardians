@@ -21,6 +21,7 @@ async function loadAllGames(): Promise<readonly Product[]> {
 
 function pickForHome(products: readonly Product[]): Product[] {
   const featured: Product[] = products.filter((product: Product): boolean => product.isFeatured);
+  // const featured: Product[] = [...products];
   const isSoon = (product: Product): boolean => product.status === 'coming-soon';
 
   return [...featured.filter((p) => !isSoon(p)), ...featured.filter(isSoon)];
