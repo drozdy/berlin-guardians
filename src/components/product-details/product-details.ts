@@ -1,7 +1,7 @@
 import { Category, type ProductDetails } from '../../types/product';
 import { Route } from '../../types/routes';
 import { createElement } from '../../utils/dom';
-import { formatPrice } from '../../utils/format';
+import { formatCoins } from '../../utils/format';
 import { getRouteHref } from '../../utils/url';
 import { createBadge } from '../ui/badge/badge';
 import { createButton } from '../ui/button/button';
@@ -88,6 +88,23 @@ function createStatusRow(state: ProductDialogState): HTMLElement[] {
     }),
   ];
 }
+
+function createPrice(priceCents: number): HTMLElement {
+  if (priceCents === 0) {
+    return createElement('p', { className: 'product-details__price', text: 'Free' });
+  }
+
+  return createElement('p', {
+    className: 'product-details__price',
+    children: [
+      createIcon('coin'),
+      formatCoins(priceCents),
+      // the icon is decorative, so the unit is read from the hidden text
+      createElement('span', { className: 'visually-hidden', text: ' coins' }),
+    ],
+  });
+}
+
 export function createProductDetails(
   product: ProductDetails,
   state: ProductDialogState,
@@ -127,10 +144,7 @@ export function createProductDetails(
             text: product.fullDescription,
           }),
 
-          createElement('p', {
-            className: 'product-details__price',
-            text: formatPrice(product.priceCents),
-          }),
+          createPrice(product.priceCents),
 
           createAction(state),
         ],

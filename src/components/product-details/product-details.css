@@ -49,9 +49,16 @@
 }
 
 .product-details__price {
+  display: flex;
+  align-items: center;
+  gap: var(--size-1);
   margin-top: var(--size-1);
   font-size: var(--headline-small);
   font-weight: var(--weight-bold);
+}
+
+.product-details__price .icon {
+  color: var(--primary);
 }
 
 .product-details__body .btn {

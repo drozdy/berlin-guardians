@@ -8,3 +8,7 @@ export function formatPrice(priceCents: number): string {
 
   return `${CURRENCY_SYMBOL}${(priceCents / CENTS_IN_UNIT).toFixed(2)}`;
 }
+
+export function formatCoins(priceCents: number): string {
+  return priceCents.toLocaleString('en-US');
+}
