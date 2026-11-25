@@ -5,3 +5,5 @@ export type CategoryRecord = {
   icon_path: string | null;
   published: boolean;
 };
+
+export const CATEGORY_DB_NAME = 'categories';
