@@ -13,6 +13,7 @@ export interface ButtonOptions {
   readonly href?: string;
   readonly type?: 'button' | 'submit';
   readonly icon?: HTMLElement;
+  readonly disabled?: boolean;
   readonly onClick?: () => void;
 }
 
@@ -47,6 +48,10 @@ export function createButton(options: ButtonOptions): HTMLButtonElement | HTMLAn
 
   if (options.onClick !== undefined) {
     button.addEventListener('click', options.onClick);
+  }
+
+  if (options.disabled === true) {
+    button.disabled = true;
   }
 
   return button;

@@ -5,6 +5,15 @@ import { createAuthForm } from '../components/auth-form/auth-form';
 import { AuthMode } from '../types/auth';
 import { loginWithEmail, registerWithEmail, formatAuthError } from '../services/auth';
 
+import {
+  createProductDetails,
+  getDialogState,
+} from '../components/product-details/product-details';
+import { MOCK_PRODUCT } from '../components/product-details/product-details.mock';
+
+// TODO: remove - temporary, switches the preview state
+const PREVIEW_IS_IN_CART = false;
+
 export interface DialogController {
   readonly syncWithDialog: (dialog: OpenDialog | undefined) => void;
   readonly closeDialogInUrl: () => void;
@@ -50,6 +59,11 @@ export function createDialogController(router: Router, modal: ModalDialog): Dial
       return;
     }
 
+    modal.element.classList.toggle(
+      'modal-dialog--product',
+      dialog.parameter === DialogParameter.Product,
+    );
+
     modal.setTitle(getDialogTitle(dialog));
     modal.content.replaceChildren();
 
@@ -87,6 +101,11 @@ export function createDialogController(router: Router, modal: ModalDialog): Dial
       modal.content.append(authForm.element);
     } else if (dialog.parameter === DialogParameter.Product) {
       // render Product card here (dialog.slug)
+      const product = { ...MOCK_PRODUCT, status: 'coming-soon' as const };
+      modal.setTitle(product.name);
+      modal.content.append(
+        createProductDetails(product, getDialogState(product, PREVIEW_IS_IN_CART)),
+      );
     }
 
     modal.show();
