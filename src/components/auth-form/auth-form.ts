@@ -1,5 +1,6 @@
 import { createElement } from '../../utils/dom';
 import { AuthMode } from '../../types/auth';
+import { AUTH_TEXT } from '../../constants/constants';
 
 // ! No own CSS:
 // ! styles come from base.css (form, field, labels, inputs)
@@ -25,13 +26,13 @@ export interface AuthFormView {
 }
 
 export function createAuthForm(options: AuthFormOptions): AuthFormView {
-  const isRegister = options.mode === 'register';
+  const isRegister = options.mode === AuthMode.Register;
 
   const description = createElement('p', {
     className: 'form__description',
     text: isRegister
       ? 'Create an account to save your progress and items.'
-      : 'Sign in with your email and password.',
+      : 'Log in with your email and password.',
   });
 
   const usernameInput = createElement('input', {
@@ -128,13 +129,15 @@ export function createAuthForm(options: AuthFormOptions): AuthFormView {
 
   const submitButton = createElement('button', {
     className: 'btn btn--primary btn--large',
-    text: isRegister ? 'Create account' : 'Sign in',
+    text: isRegister ? AUTH_TEXT.register : AUTH_TEXT.login,
     attributes: { type: 'submit' },
   });
 
   const switchModeButton = createElement('button', {
     className: 'link-button',
-    text: isRegister ? 'Already have an account? Sign in' : 'Need an account? Register',
+    text: isRegister
+      ? `Already have an account? ${AUTH_TEXT.login}`
+      : `Need an account? ${AUTH_TEXT.register}`,
     attributes: { type: 'button' },
   });
 
