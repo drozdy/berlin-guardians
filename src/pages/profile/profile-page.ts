@@ -1,7 +1,7 @@
 // src/pages/profile/profile-page.ts
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { toUsersRecordMapper } from '../../api/users-adapter';
-import { getFirebaseAuth, FIREBASE_ENDPOINT } from '../../services/firebase';
+import { getFirebaseAuth, FIREBASE_ENDPOINT_QUERY } from '../../services/firebase';
 import { AuthMode } from '../../types/auth';
 import { DialogParameter, Route, type PageView } from '../../types/routes';
 import { createButton } from '../../components/ui/button/button';
@@ -20,7 +20,7 @@ export async function fetchPublicUserByUid(
   uid: string,
   idToken: string,
 ): Promise<Partial<UsersRecord> | null> {
-  const url = FIREBASE_ENDPOINT;
+  const url = FIREBASE_ENDPOINT_QUERY;
 
   const response = await fetch(url, {
     method: 'POST',
