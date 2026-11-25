@@ -1,13 +1,13 @@
 import { type ProductDetails } from '../../types/product';
 import { Route } from '../../types/routes';
 import { createElement } from '../../utils/dom';
-import { formatCoins } from '../../utils/format';
 import { getRouteHref } from '../../utils/url';
 import { createBadge } from '../ui/badge/badge';
 import { createCategoryBadge } from '../ui/badge/category-badge';
 import { createButton } from '../ui/button/button';
 import { createIcon, type IconName } from '../ui/icon/icon';
 import { createPicture } from '../ui/picture/picture';
+import { createPrice } from '../ui/price/price';
 import './product-details.css';
 
 export type ProductDialogState = 'default' | 'in-cart' | 'coming-soon';
@@ -66,22 +66,6 @@ function createStatusRow(state: ProductDialogState): HTMLElement[] {
   ];
 }
 
-function createPrice(priceCents: number): HTMLElement {
-  if (priceCents === 0) {
-    return createElement('p', { className: 'product-details__price', text: 'Free' });
-  }
-
-  return createElement('p', {
-    className: 'product-details__price',
-    children: [
-      createIcon('coin'),
-      formatCoins(priceCents),
-      // the icon is decorative, so the unit is read from the hidden text
-      createElement('span', { className: 'visually-hidden', text: ' coins' }),
-    ],
-  });
-}
-
 export function createProductDetails(
   product: ProductDetails,
   state: ProductDialogState,
@@ -121,7 +105,7 @@ export function createProductDetails(
             text: product.fullDescription,
           }),
 
-          createPrice(product.priceCents),
+          createPrice(product.priceCents, 'product-details__price'),
 
           createAction(state),
         ],

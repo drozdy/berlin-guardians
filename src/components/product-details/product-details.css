@@ -57,10 +57,6 @@
   font-weight: var(--weight-bold);
 }
 
-.product-details__price .icon {
-  color: var(--primary);
-}
-
 .product-details__body .btn {
   margin-top: var(--size-1);
   width: 100%;
