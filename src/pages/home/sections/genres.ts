@@ -4,7 +4,7 @@ import { FIREBASE_ENDPOINT_QUERY } from '../../../services/firebase';
 import { type CategoryRecord, CATEGORY_DB_NAME } from '../../../types/categories';
 import { type RunQueryResponseItem } from '../../../api/firestore-rest';
 import { toCategoriesRecordMapper } from '../../../api/categories-adapter';
-import { BASE_PATH, toBrowserUrl } from '../../../utils/url';
+import { BASE_PATH, toBrowserUrl, withBase } from '../../../utils/url';
 import { Route } from '../../../types/routes';
 import './genres.css';
 
@@ -66,7 +66,7 @@ export function createGenresSection(): HTMLElement {
           className: 'genre-tile__icon',
           attributes: {
             'aria-hidden': 'true',
-            src: `${BASE_PATH}assets/images/genres/${item?.icon_path}`, // add fallback or onError handler
+            src: withBase(`assets/images/genres/${item?.icon_path}`), // add fallback or onError handler
           },
         });
         const categoryLink: HTMLAnchorElement = createElement('a', {
