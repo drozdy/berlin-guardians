@@ -1,5 +1,10 @@
 import { firebaseConfig, FIREBASE_ENDPOINT } from '../services/firebase';
 
+export interface RunQueryDocument {
+  name: string;
+  fields?: Record<string, FirestoreFieldValue>;
+}
+
 export interface FirestoreRestDocument {
   readonly name: string;
   readonly fields?: Record<string, FirestoreRestValue>;
@@ -126,4 +131,16 @@ export async function restCreateDocument(
   }
 
   return response.json();
+}
+
+export interface RunQueryFilter {
+  fieldFilter?: {
+    field: { fieldPath: string };
+    op: 'EQUAL';
+    value: { integerValue?: string; referenceValue?: string };
+  };
+  compositeFilter?: {
+    op: 'AND';
+    filters: NonNullable<RunQueryFilter['fieldFilter']>[];
+  };
 }
