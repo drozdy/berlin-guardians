@@ -45,18 +45,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--size-05) var(--size-2);
-  color: var(--on-bg);
-}
-
-.product-details__meta-item {
-  display: inline-flex;
-  align-items: center;
   gap: var(--size-1);
-}
-
-.product-details__separator {
-  color: var(--on-bg-low);
 }
 
 .product-details__price {

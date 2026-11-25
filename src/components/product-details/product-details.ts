@@ -59,11 +59,8 @@ function createAction(state: ProductDialogState): HTMLElement {
   }
 }
 
-function createMetaItem(icon: IconName, text: string): HTMLElement {
-  return createElement('span', {
-    className: 'product-details__meta-item',
-    children: [createIcon(icon), text],
-  });
+function createMetaBadge(icon: IconName, text: string): HTMLSpanElement {
+  return createBadge(text, 'meta', createIcon(icon));
 }
 
 function createCategoryBadge(product: ProductDetails): HTMLSpanElement {
@@ -120,13 +117,8 @@ export function createProductDetails(
             className: 'product-details__meta',
             children: [
               createCategoryBadge(product),
-              createMetaItem('user', product.specs.players),
-              createElement('span', {
-                className: 'product-details__separator',
-                text: '•',
-                attributes: { 'aria-hidden': 'true' },
-              }),
-              createMetaItem('clock', product.specs.duration),
+              createMetaBadge('user', product.specs.players),
+              createMetaBadge('clock', product.specs.duration),
             ],
           }),
 

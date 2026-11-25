@@ -29,22 +29,14 @@
   --like: #ff6574; /* ~ */
   --error: #ffb3b3;
   --price-free: #7fd0db; /* ~ only for "Free" */
-  --success: #6fd391; /* ~ check icons, category text */
-  --success-container: #1f3d2e; /* ~ category badge background */
+  --success: #6fd391; /* ~ check icons */
   --category-puzzle-fg: #b8a9ff;
-  --category-arcade-bg: #4a2640;
   --category-arcade-fg: #ff9fd0;
-  --category-strategy-bg: #1f3350;
   --category-strategy-fg: #8cc2ff;
-  --category-farm-bg: #1f3d2e;
   --category-farm-fg: #6fd391;
-  --category-adventure-bg: #4a3320;
   --category-adventure-fg: #ffb36b;
-  --category-simulation-bg: #1d3d42;
   --category-simulation-fg: #7fd0db;
-  --category-music-bg: #4a2428;
   --category-music-fg: #ff8f9a;
-  --category-casual-bg: #3d3a2a;
   --category-casual-fg: #e0d48a;
 
   /* colors: borders and overlays */
