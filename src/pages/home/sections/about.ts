@@ -3,7 +3,7 @@ import { createSectionHeader } from '../../../components/ui/section-header/secti
 import type { UsersRecord } from '../../../types/users';
 import { createElement } from '../../../utils/dom';
 import { createContributorsList } from './../../../components/contributors/contributors';
-import { ABOUT_CONTENT } from '../../../data/about';
+import { ABOUT_CONTENT } from '../../../constants/about';
 import './about.css';
 
 export function createAboutSection(): HTMLElement {
