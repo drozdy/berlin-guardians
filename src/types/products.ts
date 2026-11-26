@@ -13,4 +13,5 @@ export interface productsRecord {
   specsDurationTo: number;
   specsPlayer: string;
   status: string;
+  url?: string;
 }

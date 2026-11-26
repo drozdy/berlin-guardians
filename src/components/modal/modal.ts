@@ -1,6 +1,8 @@
 import { createElement } from '../../utils/dom';
 import './modal.css';
 
+const TITLE_ID = 'modal-title';
+
 export interface ModalDialog {
   readonly element: HTMLDialogElement;
   readonly content: HTMLElement;
@@ -30,6 +32,7 @@ export function createDialogModal(
 
   const modalTitle: HTMLHeadingElement = createElement('h2', {
     text: initialTitle,
+    attributes: { id: TITLE_ID },
   });
 
   const content: HTMLDivElement = createElement('div', {
@@ -38,6 +41,7 @@ export function createDialogModal(
 
   const dialog: HTMLDialogElement = createElement('dialog', {
     className: 'modal-dialog',
+    attributes: { 'aria-labelledby': TITLE_ID },
     children: [closeButton, modalTitle, content],
   });
 

@@ -7,7 +7,6 @@ export function toCategoriesRecordMapper(item: RunQueryResponseItem): CategoryRe
   }
 
   const fields = item.document.fields ?? {};
-  console.log(fields);
   const result: CategoryRecord = {
     tag: fields.uid?.stringValue ?? 'all',
     description: fields.description?.stringValue ?? '',
