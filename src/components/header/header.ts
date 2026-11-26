@@ -4,9 +4,10 @@ import { createButton } from '../ui/button/button';
 import { Route } from './../../types/routes';
 import { createElement } from './../../utils/dom';
 import { createMobileMenu, type MobileMenu } from './mobile-menu';
-import './header.css';
 import { createBrand } from '../brand/brand';
 import { AuthMode } from '../../types/auth';
+import './header.css';
+import { AUTH_TEXT } from '../../constants/constants';
 
 export interface HeaderAuthState {
   readonly isAuthenticated: boolean;
@@ -35,7 +36,7 @@ interface PageLink {
 }
 
 export interface HeaderOptions {
-  // Log In asks for the login form and Sign Up for the registration form
+  // Log in asks for the login form and Register for the registration form
   readonly onAuthClick?: (mode: AuthMode) => void;
   // Log Out ends the session of the signed-in user
   readonly onLogout?: () => void;
@@ -87,14 +88,14 @@ function createNavigation(pageLinks: PageLinks, className: string): HTMLElement 
 function createGuestControls(options: HeaderOptions): HTMLElement[] {
   return [
     createButton({
-      text: 'Log in',
+      text: AUTH_TEXT.login,
       variant: 'outline',
       onClick: (): void => {
         options.onAuthClick?.(AuthMode.Login);
       },
     }),
     createButton({
-      text: 'Sign Up',
+      text: AUTH_TEXT.register,
       onClick: (): void => {
         options.onAuthClick?.(AuthMode.Register);
       },
@@ -120,7 +121,7 @@ function createAuthenticatedControls(
   }
 
   const logoutButton: HTMLButtonElement | HTMLAnchorElement = createButton({
-    text: 'Log out',
+    text: AUTH_TEXT.logout,
     variant: 'outline',
     onClick: (): void => {
       options.onLogout?.();

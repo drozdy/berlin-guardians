@@ -13,6 +13,7 @@ import type { ProductDetails } from '../types/product';
 import { fetchProductDetails } from '../api/products-api';
 import { createElement } from '../utils/dom';
 import { ProductNotFoundError } from '../api/errors';
+import { AUTH_TEXT } from '../constants/constants';
 
 export interface DialogController {
   readonly syncWithDialog: (dialog: OpenDialog | undefined) => void;
@@ -32,7 +33,7 @@ function createQueryWithoutDialog(query: URLSearchParams): URLSearchParams {
 
 function getDialogTitle(dialog: OpenDialog): string {
   if (dialog.parameter === DialogParameter.Auth) {
-    return dialog.mode === 'register' ? 'Register' : 'Sign in';
+    return dialog.mode === AuthMode.Register ? AUTH_TEXT.register : AUTH_TEXT.login;
   }
   return `Product: ${dialog.slug}`;
 }
@@ -111,6 +112,8 @@ export function createDialogController(router: Router, modal: ModalDialog): Dial
       'modal-dialog--product',
       dialog.parameter === DialogParameter.Product,
     );
+
+    modal.element.classList.toggle('modal-dialog--auth', dialog.parameter === DialogParameter.Auth);
 
     modal.setTitle(getDialogTitle(dialog));
     modal.content.replaceChildren();
